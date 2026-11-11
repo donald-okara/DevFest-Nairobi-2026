@@ -108,27 +108,3 @@ fun StatementSlide(
         }
     }
 }
-
-/**
- * Placeholder for a live demo: the API being shown and what to show on stage.
- * Replace the right-hand side with the ported demo once it exists.
- */
-@Composable
-fun DemoPlaceholderSlide(
-    title: String,
-    api: String,
-    show: List<String>,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(Values.Dimens.largePadding),
-        verticalArrangement = Arrangement.spacedBy(Values.Dimens.largePadding),
-    ) {
-        SlideTitle(title = title, kicker = "Live demo")
-        CalloutCard(title = api, modifier = Modifier.fillMaxWidth()) {
-            show.forEach { Text("• $it", style = MaterialTheme.typography.titleMedium) }
-        }
-    }
-}

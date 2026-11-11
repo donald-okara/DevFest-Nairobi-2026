@@ -31,6 +31,7 @@ import ke.don.demos.talk.ThankYouSlide
 import ke.don.demos.talk.WINDOW_CONSTRAINT_STEPS
 import ke.don.demos.talk.WindowConstraintSlide
 import ke.don.demos.talk.WindowSizeClassesSlide
+import ke.don.demos.playground.PLAYGROUND_STEPS
 import ke.don.domain.ScreenTransition
 import ke.don.domain.SlideConfig
 import ke.don.domain.SlidesConstants.SESSION_DURATION
@@ -96,19 +97,19 @@ fun skiPresentationSlides(sessionDuration: Duration = SESSION_DURATION): List<Sl
                 slide("The window is your constraint", notes = windowConstraintNotes, steps = WINDOW_CONSTRAINT_STEPS) {
                     WindowConstraintSlide()
                 }
-                slide("Demo 1 · Window size classes", notes = windowSizeClassesNotes) {
+                slide("Demo 1 · Window size classes", notes = windowSizeClassesNotes, steps = PLAYGROUND_STEPS) {
                     WindowSizeClassesSlide()
                 }
-                slide("Demo 2 · Adaptive navigation", notes = adaptiveNavigationNotes) {
+                slide("Demo 2 · Adaptive navigation", notes = adaptiveNavigationNotes, steps = PLAYGROUND_STEPS) {
                     AdaptiveNavigationSlide()
                 }
-                slide("Demo 3 · List-detail", notes = listDetailNotes) {
+                slide("Demo 3 · List-detail", notes = listDetailNotes, steps = PLAYGROUND_STEPS) {
                     ListDetailSlide()
                 }
-                slide("Demo 4 · Supporting panes", notes = supportingPaneNotes) {
+                slide("Demo 4 · Supporting panes", notes = supportingPaneNotes, steps = PLAYGROUND_STEPS) {
                     SupportingPaneSlide()
                 }
-                slide("Demo 5 · It's not just scaffolds", notes = adaptiveContentNotes) {
+                slide("Demo 5 · It's not just scaffolds", notes = adaptiveContentNotes, steps = PLAYGROUND_STEPS) {
                     AdaptiveContentSlide()
                 }
             }

@@ -15,6 +15,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import io.github.donald_okara.components.reveal.RevealItem
 import io.github.donald_okara.components.text.SlideTitle
+import ke.don.demos.playground.CONTENT_CODE
+import ke.don.demos.playground.LIST_DETAIL_CODE
+import ke.don.demos.playground.NAVIGATION_CODE
+import ke.don.demos.playground.PlaygroundDemoSlide
+import ke.don.demos.playground.PlaygroundStage
+import ke.don.demos.playground.SIZE_CLASSES_CODE
+import ke.don.demos.playground.SUPPORTING_PANE_CODE
 import ke.don.domain.values.Values
 
 // Slide bodies for "Adaptive UI in Jetpack Compose". The script is docs/talk.md;
@@ -221,62 +228,42 @@ fun WindowConstraintSlide(modifier: Modifier = Modifier) {
 
 /** Slide 11, Demo 1. */
 @Composable
-fun WindowSizeClassesSlide() = DemoPlaceholderSlide(
+fun WindowSizeClassesSlide() = PlaygroundDemoSlide(
     title = "Window size classes",
-    api = "currentWindowAdaptiveInfo().windowSizeClass",
-    show = listOf(
-        "Read the current size class",
-        "Resize the window across compact, medium, expanded",
-        "Switch navigation on the width class",
-    ),
+    stage = PlaygroundStage.SizeClasses,
+    code = SIZE_CLASSES_CODE,
 )
 
 /** Slide 12, Demo 2. */
 @Composable
-fun AdaptiveNavigationSlide() = DemoPlaceholderSlide(
+fun AdaptiveNavigationSlide() = PlaygroundDemoSlide(
     title = "Adaptive navigation",
-    api = "NavigationSuiteScaffold",
-    show = listOf(
-        "Bottom bar at compact width",
-        "Rail, then drawer as the window widens",
-        "Same app, not a second one",
-    ),
+    stage = PlaygroundStage.Navigation,
+    code = NAVIGATION_CODE,
 )
 
 /** Slide 13, Demo 3. */
 @Composable
-fun ListDetailSlide() = DemoPlaceholderSlide(
+fun ListDetailSlide() = PlaygroundDemoSlide(
     title = "List-detail layouts",
-    api = "ListDetailPaneScaffold",
-    show = listOf(
-        "Compact: list and detail are separate destinations",
-        "Expanded: side by side",
-        "Selection survives the resize",
-    ),
+    stage = PlaygroundStage.ListDetail,
+    code = LIST_DETAIL_CODE,
 )
 
 /** Slide 14, Demo 4. */
 @Composable
-fun SupportingPaneSlide() = DemoPlaceholderSlide(
+fun SupportingPaneSlide() = PlaygroundDemoSlide(
     title = "Supporting panes",
-    api = "SupportingPaneScaffold",
-    show = listOf(
-        "Compact: supporting content behind an interaction",
-        "Expanded: stays visible",
-        "More utility, not more whitespace",
-    ),
+    stage = PlaygroundStage.SupportingPane,
+    code = SUPPORTING_PANE_CODE,
 )
 
-/** Slide 15, Demo 5. */
+/** Slide 15, Demo 5: Grid, FlexBox and a capped form width. */
 @Composable
-fun AdaptiveContentSlide() = DemoPlaceholderSlide(
+fun AdaptiveContentSlide() = PlaygroundDemoSlide(
     title = "It's not just scaffolds",
-    api = "Grids, max widths, input",
-    show = listOf(
-        "Adaptive grid column count",
-        "Form capped at a maximum width",
-        "Touch, keyboard, mouse, stylus",
-    ),
+    stage = PlaygroundStage.Content,
+    code = CONTENT_CODE,
 )
 
 // Part 6: The takeaway

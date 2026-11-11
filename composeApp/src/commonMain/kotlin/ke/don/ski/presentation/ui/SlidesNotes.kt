@@ -87,30 +87,35 @@ val windowSizeClassesNotes = notes(
     "Window size classes: compact, medium, expanded width. They describe window space, not device type.",
     "Demo 1: read the current size class, resize the window across the breakpoints, switch navigation on the width class.",
     "What the demo doesn't show: device detection. \"We're not asking what device we're on. We're asking what space we have.\"",
+    "Playground: tap Phone, Foldable, Tablet, Laptop, Desktop, or drag the right edge. It simulates the window, because inside the deck currentWindowAdaptiveInfo() would report the fullscreen projector window. Say so: the real app reads currentWindowAdaptiveInfo(). Next arrow shows the code.",
 )
 
 val adaptiveNavigationNotes = notes(
     "Bottom navigation is natural on a phone: thumb reach, familiar, cheap on space. With more width, a rail; even more, a permanent drawer.",
     "Demo 2: NavigationSuiteScaffold. Compact, then expanded, watch the navigation type change.",
     "\"We're not building a second application. We're adapting the one we already have.\" Back-stack behaviour is out of scope.",
+    "Drag from Phone to Desktop: bottom bar, then rail at 600dp, then drawer at 1200dp. Next arrow shows the NavigationSuiteScaffold code.",
 )
 
 val listDetailNotes = notes(
     "Messaging app: on a phone, tap a conversation and navigate in. With more space, keep the list and the conversation side by side.",
     "Demo 3: ListDetailPaneScaffold. Compact: separate destinations. Expanded: side by side. Selection survives the resize.",
     "What it doesn't show: state across process death. Email, files, banking: lots of places this fits.",
+    "On Phone, tap a message, then switch to Tablet: the selection is still open, now beside the list. Back on Phone, the detail shows a back arrow. Next arrow shows the code.",
 )
 
 val supportingPaneNotes = notes(
     "Sometimes two panes aren't enough. A document editor wants a table of contents, formatting, properties.",
     "Demo 4: SupportingPaneScaffold. Compact hides the supporting content behind an interaction; expanded keeps it visible.",
     "The extra space should add utility, not whitespace.",
+    "On Phone, tap Contents to open the supporting pane. Widen to Laptop: it stays beside the document. Next arrow shows the code.",
 )
 
 val adaptiveContentNotes = notes(
     "Adaptive UI isn't just picking the right scaffold. Grids go from 2 columns to 4 or 5. Forms shouldn't stretch across a desktop. Content wants a max width.",
     "Input matters too: touch on phones, keyboard and mouse on desktop, stylus on tablets.",
     "Demo 5: adaptive grid, max content width, different arrangements. It's a product and interaction decision, not just a layout one.",
+    "Gallery: drag the width and watch the FlexBox chips rewrap and the Grid go from 2 to 5 columns. Then open Settings: the form stops at 560dp. Grid and FlexBox are experimental APIs. Next arrow shows the code.",
 )
 
 // Part 6: The takeaway
