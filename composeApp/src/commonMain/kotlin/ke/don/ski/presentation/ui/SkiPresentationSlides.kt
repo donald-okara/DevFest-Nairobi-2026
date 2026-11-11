@@ -3,149 +3,129 @@ package ke.don.ski.presentation.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import ke.don.demos.DemoLayoutExample
-import ke.don.demos.DeviceGallery
-import ke.don.demos.FeatureSlide
-import ke.don.demos.FramesDemo
-import ke.don.demos.HorizontalSegmentsDemo
-import ke.don.demos.KodeViewerSlide
-import ke.don.demos.RevealDemo
-import ke.don.demos.ShortcutsSlide
-import ke.don.demos.SlidesAreComposablesDemo
-import ke.don.demos.VerticalSegmentsDemo
-import ke.don.demos.VideoSlide
-import ke.don.demos.WhiteboardSlide
+import ke.don.demos.talk.ABANDON_MOBILE_STEPS
+import ke.don.demos.talk.ACCOMMODATE_STEPS
+import ke.don.demos.talk.ADAPTIVE_MEANING_STEPS
+import ke.don.demos.talk.APPS_DOING_THIS_STEPS
+import ke.don.demos.talk.AbandonMobileSlide
+import ke.don.demos.talk.AccommodateSlide
+import ke.don.demos.talk.AdaptiveContentSlide
+import ke.don.demos.talk.AdaptiveMeaningSlide
+import ke.don.demos.talk.AdaptiveNavigationSlide
+import ke.don.demos.talk.AppsDoingThisSlide
+import ke.don.demos.talk.BOTTOM_LINE_STEPS
+import ke.don.demos.talk.BottomLineSlide
+import ke.don.demos.talk.COMPACT_INTERACTIONS_STEPS
+import ke.don.demos.talk.CONTEXTS_STEPS
+import ke.don.demos.talk.CompactInteractionsSlide
+import ke.don.demos.talk.ContextsSlide
+import ke.don.demos.talk.FEEDBACK_LOOP_STEPS
+import ke.don.demos.talk.FOLLOW_THE_MONEY_STEPS
+import ke.don.demos.talk.FeedbackLoopSlide
+import ke.don.demos.talk.FollowTheMoneySlide
+import ke.don.demos.talk.ListDetailSlide
+import ke.don.demos.talk.SupportingPaneSlide
+import ke.don.demos.talk.TAKEAWAY_STEPS
+import ke.don.demos.talk.TakeawaySlide
+import ke.don.demos.talk.ThankYouSlide
+import ke.don.demos.talk.WINDOW_CONSTRAINT_STEPS
+import ke.don.demos.talk.WindowConstraintSlide
+import ke.don.demos.talk.WindowSizeClassesSlide
 import ke.don.domain.ScreenTransition
 import ke.don.domain.SlideConfig
 import ke.don.domain.SlidesConstants.SESSION_DURATION
 import ke.don.domain.generateDeck
 import ke.don.domain.timer.TimerController
 import ke.don.introduction.IntroductionScreen
-import ke.don.resources.Resources
 import kotlin.time.Duration
 
+/** The deck for "Adaptive UI in Jetpack Compose". Script: docs/talk.md. Timing: docs/flow.md. */
 @Composable
 fun skiPresentationSlides(sessionDuration: Duration = SESSION_DURATION): List<SlideConfig> {
     val timerController = rememberTimerController(sessionDuration)
 
     val slides = remember(timerController) {
-            generateDeck(
-                timerController = timerController
-            ) {
+        generateDeck(timerController = timerController) {
+            section("Part 1 · The setup") {
                 slide(
-                    "Introduction",
+                    "Title",
                     transition = ScreenTransition.Fade,
-                    notes = introductionNotes,
+                    notes = titleNotes,
                     showHeader = false,
                     showFooter = false
-                ) {
-                    IntroductionScreen()
+                ) { IntroductionScreen() }
+                slide("Chicken and egg", notes = feedbackLoopNotes, steps = FEEDBACK_LOOP_STEPS) {
+                    FeedbackLoopSlide()
                 }
-                slide("What Ski Is", notes = whatIsSkiNotes) {
-                    FeatureSlide(
-                        title = "What Ski Is",
-                        points = listOf(
-                            "A presentation framework built on Compose Multiplatform",
-                            "Slides are composables, built with state and components",
-                            "Runs as a browser app (Wasm) or a desktop app (JVM)"
-                        )
-                    )
+            }
+
+            section("Part 2 · Why should you care?") {
+                slide("Forget Google's bottom line", notes = bottomLineNotes, steps = BOTTOM_LINE_STEPS) {
+                    BottomLineSlide()
                 }
-                slide("Slides Are Composables", notes = slidesAreComposablesNotes) {
-                    SlidesAreComposablesDemo()
+                slide("Follow the money", notes = followTheMoneyNotes, steps = FOLLOW_THE_MONEY_STEPS) {
+                    FollowTheMoneySlide()
                 }
-                slide("Stateful Reveals", notes = stateRevealNotes) {
-                    RevealDemo()
+                slide("Apps already doing this", notes = appsDoingThisNotes, steps = APPS_DOING_THIS_STEPS) {
+                    AppsDoingThisSlide()
                 }
-                slide("Transitions", notes = transitionsNotes) {
-                    FeatureSlide(
-                        title = "Transitions",
-                        points = listOf(
-                            "Horizontal (default)",
-                            "Fade",
-                            "Vertical",
-                            "None"
-                        )
-                    )
+            }
+
+            section("Part 3 · Why mobile still matters") {
+                slide("Are we abandoning mobile?", notes = abandonMobileNotes, steps = ABANDON_MOBILE_STEPS) {
+                    AbandonMobileSlide()
                 }
-                slide("Frames", notes = framesNotes) {
-                    FramesDemo()
+                slide("Compact interactions", notes = compactInteractionsNotes, steps = COMPACT_INTERACTIONS_STEPS) {
+                    CompactInteractionsSlide()
                 }
-                slide("Backgrounds", notes = backgroundsNotes) {
-                    FeatureSlide(
-                        title = "Backgrounds",
-                        points = listOf(
-                            "Built with BackgroundBuilder",
-                            "Patterns: Wavy, DiagonalWavy, AnimatedDiagonalWavyBackground",
-                            "Optional decorator image and alignment"
-                        )
-                    )
+                slide("Different devices, different contexts", notes = contextsNotes, steps = CONTEXTS_STEPS) {
+                    ContextsSlide()
                 }
-                slide("Kode Viewer", notes = kodeViewerNotes) {
-                    KodeViewerSlide()
+            }
+
+            section("Part 4 · The transition") {
+                slide("Accommodating the user", notes = accommodateNotes, steps = ACCOMMODATE_STEPS) {
+                    AccommodateSlide()
                 }
-                slide("Whiteboard Screen", notes = whiteboardNotes) {
-                    WhiteboardSlide()
+            }
+
+            section("Part 5 · The how") {
+                slide("What adaptive UI means", notes = adaptiveMeaningNotes, steps = ADAPTIVE_MEANING_STEPS) {
+                    AdaptiveMeaningSlide()
                 }
-                slide("Horizontal Segments", notes = horizontalSegmentsNotes) {
-                    HorizontalSegmentsDemo()
+                slide("The window is your constraint", notes = windowConstraintNotes, steps = WINDOW_CONSTRAINT_STEPS) {
+                    WindowConstraintSlide()
                 }
-                slide("Vertical Segments", notes = verticalSegmentsNotes) {
-                    VerticalSegmentsDemo()
+                slide("Demo 1 · Window size classes", notes = windowSizeClassesNotes) {
+                    WindowSizeClassesSlide()
                 }
-                slide("Device Frames", notes = deviceFramesNotes) {
-                    DeviceGallery()
+                slide("Demo 2 · Adaptive navigation", notes = adaptiveNavigationNotes) {
+                    AdaptiveNavigationSlide()
                 }
-                slide("Demo Layout", notes = demoLayoutNotes) {
-                    DemoLayoutExample()
+                slide("Demo 3 · List-detail", notes = listDetailNotes) {
+                    ListDetailSlide()
                 }
-                slide("Video", notes = videoNotes) {
-                    VideoSlide(
-                        videoUri = Resources.Videos.SAMPLE_VIDEO_PATH,
-                        title = "Video in Slides",
-                        explanation = listOf(
-                            "Plays a bundled file or a remote URL",
-                            "Controls hide during playback"
-                        ),
-                        code = "VideoSlide(videoUri = Resources.Videos.SAMPLE_VIDEO_PATH, ...)"
-                    )
+                slide("Demo 4 · Supporting panes", notes = supportingPaneNotes) {
+                    SupportingPaneSlide()
                 }
-                slide("Presenter Mode", notes = presenterModeNotes) {
-                    FeatureSlide(
-                        title = "Presenter Mode",
-                        points = listOf(
-                            "Presenter panel: notes, timer, table of contents, shortcuts",
-                            "Audience window: the slide only",
-                            "Desktop windows stay in sync automatically"
-                        )
-                    )
+                slide("Demo 5 · It's not just scaffolds", notes = adaptiveContentNotes) {
+                    AdaptiveContentSlide()
                 }
-                slide("Keyboard Shortcuts", notes = shortcutsNotes) {
-                    ShortcutsSlide()
+            }
+
+            section("Part 6 · The takeaway") {
+                slide("Meet them where they are", notes = takeawayNotes, steps = TAKEAWAY_STEPS) {
+                    TakeawaySlide()
                 }
-                slide("Use It in Your Project", notes = useItNotes) {
-                    FeatureSlide(
-                        title = "Use It in Your Project",
-                        points = listOf(
-                            "Add io.github.donald-okara:ski from Maven Central",
-                            "Or work in this repo with local components",
-                            "Write each slide as a composable in a segment"
-                        )
-                    )
-                }
-                slide("Questions", notes = questionsNotes, footer = null) {
-                    FeatureSlide(
-                        title = "Questions",
-                        points = listOf(
-                            "Live gallery: ski-gallery.vercel.app",
-                            "Toolkit and docs: the README in this repo"
-                        )
-                    )
+                slide("Thank you", notes = thankYouNotes, footer = null) {
+                    ThankYouSlide()
                 }
             }
         }
+    }
     return slides
 }
+
 @Composable
 fun rememberTimerController(
     sessionDuration: Duration

@@ -60,12 +60,12 @@ fun IntroductionScreen(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         TextSegment(
-            title = "Building Slides with Jetpack Compose on Ski",
-            presenter = "Jane Doe",
-            role = "Title, Company",
+            title = "Adaptive UI in Jetpack Compose",
+            presenter = "Donald Isoe",
+            role = "Meet your users where they are",
         )
 
-        SpeakerPhoto(image = Resources.Images.RAFAELLA)
+        SpeakerPhoto(image = Resources.Images.DON)
     }
 }
 

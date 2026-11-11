@@ -1,7 +1,7 @@
 package ke.don.demos
 
 import java.io.File
-import ski.shared.resources.generated.resources.Res
+import ke.don.resources.generated.Res
 
 /**
  * JVM players need a file: URI. Bundled resources are copied to the temp directory

@@ -9,7 +9,7 @@ import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 object SlidesConstants {
-    val SESSION_DURATION = 45.minutes
+    val SESSION_DURATION = 30.minutes
     val TIMER_ADJUST_STEP = 1.minutes
     const val FRAME_OPACITY = Values.FRAME_OPACITY
 }
@@ -19,6 +19,19 @@ class DeckBuilder(
 ) {
     private val _slides = mutableListOf<SlideConfig>()
     val slides: List<SlideConfig> get() = _slides
+
+    private var currentSection: String? = null
+
+    /**
+     * Groups the slides added in [content] under [title]. The table of contents
+     * shows the title as a heading with these slides indented under it.
+     */
+    fun section(title: String, content: DeckBuilder.() -> Unit) {
+        val previous = currentSection
+        currentSection = title
+        content()
+        currentSection = previous
+    }
 
     fun slide(
         label: String,
@@ -43,6 +56,7 @@ class DeckBuilder(
             showHeader = showHeader,
             header = header,
             steps = steps,
+            section = currentSection,
             content = content
         )
     }

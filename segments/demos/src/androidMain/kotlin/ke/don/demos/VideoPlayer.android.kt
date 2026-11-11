@@ -1,6 +1,6 @@
 package ke.don.demos
 
-import ski.shared.resources.generated.resources.Res
+import ke.don.resources.generated.Res
 
 /**
  * Bundled resources are resolved with Res.getUri. Not verified on this platform yet:

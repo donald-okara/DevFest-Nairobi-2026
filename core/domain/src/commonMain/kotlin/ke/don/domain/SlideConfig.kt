@@ -23,6 +23,8 @@ data class SlideConfig(
     /** Whether the deck-wide header (the DevFest wordmark) shows on this slide. */
     val showHeader: Boolean = true,
     val steps: Int = 0,
+    /** Title of the section this slide belongs to, set by [DeckBuilder.section]. Null for slides outside a section. */
+    val section: String? = null,
     val content: @Composable () -> Unit,
 ) {
     @Composable

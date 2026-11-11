@@ -1,4 +1,4 @@
-rootProject.name = "Ski"
+rootProject.name = "DevFestNairobi2026"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

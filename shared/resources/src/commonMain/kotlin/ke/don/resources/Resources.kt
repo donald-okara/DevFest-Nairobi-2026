@@ -1,6 +1,6 @@
 package ke.don.resources
 
-import ski.shared.resources.generated.resources.*
+import ke.don.resources.generated.*
 
 
 object Resources {
@@ -19,11 +19,7 @@ object Resources {
 
     object Images {
 
-        //People
-        val IAN = Res.drawable.ian_dooley
-        val IVANA = Res.drawable.ivana_cajina
-        val RAFAELLA = Res.drawable.rafaella_mendes
-        val ANDROID_ROBOT = Res.drawable.android_head_3D
+        val DON = Res.drawable.don
     }
 
     object Videos {

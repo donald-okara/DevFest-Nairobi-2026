@@ -1,6 +1,6 @@
 package ke.don.demos
 
-import ski.shared.resources.generated.resources.Res
+import ke.don.resources.generated.Res
 
 /** Bundled resources are served by URL on the web. Remote URLs pass through unchanged. */
 actual suspend fun resolveVideoUriForPlayer(videoUri: String): String {

@@ -193,7 +193,7 @@ Built-in frames: `SnakeFrame` (default) and `BasicFrame`. Frames are provided th
 ```kotlin
 val background = BackgroundBuilder()
     .setPattern(Pattern.AnimatedDiagonalWavyBackground(colors = PatternDefaults.colors))
-    .setDecoratorImage(DecoratorImage(Resources.Images.ANDROID_ROBOT))
+    .setDecoratorImage(DecoratorImage(Resources.Images.DON))
     .setAlignment(Alignment.BottomEnd)
     .build()
 ```

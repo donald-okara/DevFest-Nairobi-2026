@@ -6,6 +6,8 @@ plugins {
 compose {
     resources {
         publicResClass = true // generates Res.*
+        // Pinned so the Res package does not change with rootProject.name.
+        packageOfResClass = "ke.don.resources.generated"
     }
 }
 

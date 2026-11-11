@@ -3,108 +3,125 @@ package ke.don.ski.presentation.ui
 import androidx.compose.ui.text.AnnotatedString
 
 // One named constant per slide, referenced from skiPresentationSlides().
-// See docs/speaker-notes.md for how to write these.
+// The full script is docs/talk.md. See docs/speaker-notes.md for how to write these.
 
-val introductionNotes = listOf(
-    AnnotatedString("Welcome. This deck is a tour of Ski, and it is built with Ski, so every slide is a composable you could copy."),
-    AnnotatedString("Promise the audience two things: what each feature is for, and how to build the same thing in their own deck."),
-    AnnotatedString("Takeaway to return to: if you can build it in Compose, you can present it.")
+private fun notes(vararg points: String) = points.map(::AnnotatedString)
+
+// Part 1: The setup
+
+val titleNotes = notes(
+    "Good morning! Today: adaptive UI in Jetpack Compose. But first, a conversation.",
+    "Ask: any Googlers in the room? Wait. Make eye contact. \"Great. I wanted someone to look at when I say this.\"",
+    "\"No offence, Google, but...\" Pause. Google is selling foldables and wants people to get value from them. Nobody wants to open their favourite app on a foldable and see a phone app with empty space around it.",
 )
 
-val demoLayoutNotes = listOf(
-    AnnotatedString("DemoLayout is the layout behind the demo slides: title and points on the left, a code card under them, the live demo on the right."),
-    AnnotatedString("The code card shows the call that builds this slide. Point at it, then at the device frame it produces."),
-    AnnotatedString("Content enters the same way on every demo slide, so the audience learns the pattern once.")
+val feedbackLoopNotes = notes(
+    "Google isn't entirely wrong. They're trying to deliver both the chicken and the egg.",
+    "Better apps make the devices useful, which brings more users, which gives developers more reason to build better apps.",
+    "\"It's a bit of a feedback loop.\" Move on.",
 )
 
-val videoNotes = listOf(
-    AnnotatedString("Video plays in the same layout as any other demo. The player is a common composable, with a small resolver per platform."),
-    AnnotatedString("The sample is bundled with the app, so it plays without a network. A remote URL works too, if the venue connection is reliable."),
-    AnnotatedString("Controls hide after three seconds of playback. Tap the video to bring them back.")
+// Part 2: Why should you care?
+
+val bottomLineNotes = notes(
+    "Step away from Google's bottom line. Want more engagement? Want to be useful in more situations? Meet people where they are. Literally, not as a LinkedIn post.",
+    "Anecdote: under two hours of screen time a day, mostly TikTok, Twitter, WhatsApp. Real work happens on the PC: Notion, Claude, Canva, Google Docs.",
+    "People who buy tablets and foldables already had a need for the space. Support that need and you become part of their workflow.",
 )
 
-val whatIsSkiNotes = listOf(
-    AnnotatedString("Ski is a presentation framework built on Compose Multiplatform."),
-    AnnotatedString("Slides are composables, so a deck is a Kotlin program rather than a document."),
-    AnnotatedString("The same deck runs as a browser app (Wasm) or a desktop app (JVM).")
+val followTheMoneyNotes = notes(
+    "580M+ large-screen Android devices (Google). 9x: people with a phone AND a large screen spend 9x more than phone-only users (Google internal data, 2026).",
+    "14x: foldable users. Pause, look at the Googler: \"Exactly the number you'd want to show developers if you were trying to sell foldables.\" Don't explain it.",
+    "~3x time: phone + tablet users of entertainment apps spend almost 200% more time in-app (US, I/O 2025). The 9x figures are money, not time. Don't say \"9x more time\".",
+    "What the numbers don't measure: cause. Foldable owners already have money to spend. Correlation, not causation. The question is whether your app is on the screen they're holding.",
 )
 
-val slidesAreComposablesNotes = listOf(
-    AnnotatedString("Show the DSL: each slide call takes a label, optional notes, and a composable body."),
-    AnnotatedString("The code card on the right is the real snippet this slide illustrates."),
-    AnnotatedString("Anything you can build in Compose can be a slide.")
+val appsDoingThisNotes = notes(
+    "Notion: databases and columns on desktop; checking, capturing, quick edits on mobile. Canva: fine on a phone, better on a big screen.",
+    "Lightroom: shoot and edit on the phone, finish on desktop. Figma mobile is for inspecting and reviewing, not authoring. Power BI: build on desktop, check the metric on the phone.",
+    "Pattern: desktop is creating, organising, analysing. Mobile is capturing, reviewing, monitoring, responding. Not strict rules.",
 )
 
-val stateRevealNotes = listOf(
-    AnnotatedString("Press Reveal to show each point. Reset starts over."),
-    AnnotatedString("It is the same slide the whole time. Only state changes, so there is no duplicated slide to maintain."),
-    AnnotatedString("The code card shows the three lines that make it work.")
+// Part 3: Why mobile still matters
+
+val abandonMobileNotes = notes(
+    "\"So do we abandon mobile and build desktop apps?\" Pause. \"Absolutely not.\"",
+    "Send money, check a package, scan a QR code, reply to a message. Reveal: \"I don't want a productivity suite. I want a button.\" Pause for laughter.",
+    "M-PESA: how often do you sit at a computer to send someone 200 shillings? The phone is already with you.",
 )
 
-val transitionsNotes = listOf(
-    AnnotatedString("Each slide picks its entry transition: Horizontal (default), Fade, Vertical, or None."),
-    AnnotatedString("The title uses Fade. The rest of this deck uses the default, Horizontal."),
-    AnnotatedString("Set the transition on the slide, next to its label, so the choice is easy to find.")
+val compactInteractionsNotes = notes(
+    "Sometimes you just want to glance: balance, next meeting, package, rain.",
+    "Widgets, app shortcuts, notification actions, Quick Settings tiles reduce the distance between intention and action. The best UX may be finishing in ten seconds, not twenty minutes in your app.",
+    "Phones have cameras, location, NFC, biometrics, sensors. QR payments, nearby services, fingerprint auth: interactions that exist because of the device in hand.",
 )
 
-val framesNotes = listOf(
-    AnnotatedString("Snake is the default frame. Basic is the plain one."),
-    AnnotatedString("Choose a frame with FrameBuilder, either for a single slide or for the whole deck."),
-    AnnotatedString("Frames are decoration. They sit around the content and do not change its layout.")
+val contextsNotes = notes(
+    "Desktop: deep engagement. Tablet and foldable: expanded engagement. Phone: immediate engagement.",
+    "Tendencies, not rules. A phone can be someone's main productivity device; a tablet can be someone's computer.",
+    "Land it: \"We're not building for screens. We're building for people who happen to use screens.\"",
 )
 
-val backgroundsNotes = listOf(
-    AnnotatedString("The background behind the deck is built with BackgroundBuilder: a pattern, a decorator image, and an alignment."),
-    AnnotatedString("Patterns are Wavy, DiagonalWavy, and AnimatedDiagonalWavyBackground."),
-    AnnotatedString("The animated pattern is the one behind this deck.")
+// Part 4: The transition
+
+val accommodateNotes = notes(
+    "\"I know this makes me sound like I'm trying to convince you to accommodate my needs...\" Pause. Let them expect the \"but\".",
+    "Reveal and say: \"Anyway. Let's talk about Compose.\" Go straight to the next slide. Do not explain the joke.",
 )
 
-val kodeViewerNotes = listOf(
-    AnnotatedString("This card shows a snippet of KodeViewerSlide, the composable that renders it."),
-    AnnotatedString("Use the card's controls to toggle the theme and to focus the code."),
-    AnnotatedString("Lambdas are folded by default, so the snippet stays short on screen.")
+// Part 5: The how
+
+val adaptiveMeaningNotes = notes(
+    "Adaptive UI: apps that respond to the space they have and change layout and interaction to match.",
+    "Responsive is how content responds to space. Adaptive is deliberate decisions about how the experience changes.",
+    "Walk the four questions. \"We're not just resizing things. We're reconsidering the layout and interaction model.\"",
 )
 
-val whiteboardNotes = listOf(
-    AnnotatedString("A freeform text area for annotating live, in the same card style as the code viewer."),
-    AnnotatedString("Type during a demo to sketch an idea the audience can see on the slide."),
-    AnnotatedString("The whiteboard is always available: press W, or press the up arrow to show the toolbar and then the pen.")
+val windowConstraintNotes = notes(
+    "Stop thinking in devices. A device doesn't tell you how much space your app has.",
+    "Split screen, the outer display of a foldable, a resized desktop window, freeform windowing.",
+    "Reveal the question: how much space does my app actually have? That's the constraint to design around.",
 )
 
-val horizontalSegmentsNotes = listOf(
-    AnnotatedString("Three panes side by side. Drag the handles to resize them."),
-    AnnotatedString("Use segmented screens when two or three things need to be compared on one slide.")
+val windowSizeClassesNotes = notes(
+    "Window size classes: compact, medium, expanded width. They describe window space, not device type.",
+    "Demo 1: read the current size class, resize the window across the breakpoints, switch navigation on the width class.",
+    "What the demo doesn't show: device detection. \"We're not asking what device we're on. We're asking what space we have.\"",
 )
 
-val verticalSegmentsNotes = listOf(
-    AnnotatedString("Three panes stacked vertically. Drag the handles to resize them.")
+val adaptiveNavigationNotes = notes(
+    "Bottom navigation is natural on a phone: thumb reach, familiar, cheap on space. With more width, a rail; even more, a permanent drawer.",
+    "Demo 2: NavigationSuiteScaffold. Compact, then expanded, watch the navigation type change.",
+    "\"We're not building a second application. We're adapting the one we already have.\" Back-stack behaviour is out of scope.",
 )
 
-val deviceFramesNotes = listOf(
-    AnnotatedString("Phone mockups from DeviceCatalog: Pixel 8, Galaxy S26, and iPhone 17 Pro."),
-    AnnotatedString("Put a live composable inside a device frame to show UI in context instead of a screenshot.")
+val listDetailNotes = notes(
+    "Messaging app: on a phone, tap a conversation and navigate in. With more space, keep the list and the conversation side by side.",
+    "Demo 3: ListDetailPaneScaffold. Compact: separate destinations. Expanded: side by side. Selection survives the resize.",
+    "What it doesn't show: state across process death. Email, files, banking: lots of places this fits.",
 )
 
-val presenterModeNotes = listOf(
-    AnnotatedString("The presenter panel shows the notes, timer, table of contents, and shortcuts. The audience window shows only the slide."),
-    AnnotatedString("On desktop, the two windows share one navigator, so they stay in sync automatically."),
-    AnnotatedString("On web, the audience view is a popup that follows the presenter. It works, but test it in the browser you present from.")
+val supportingPaneNotes = notes(
+    "Sometimes two panes aren't enough. A document editor wants a table of contents, formatting, properties.",
+    "Demo 4: SupportingPaneScaffold. Compact hides the supporting content behind an interaction; expanded keeps it visible.",
+    "The extra space should add utility, not whitespace.",
 )
 
-val shortcutsNotes = listOf(
-    AnnotatedString("Right arrow, Space, and Enter go forward. Left arrow and Backspace go back."),
-    AnnotatedString("In the presenter panel, T opens the table of contents, C the shortcut guide, and H or the down arrow the hint."),
-    AnnotatedString("D switches the theme, and Escape dismisses every overlay."),
-    AnnotatedString("W opens and closes the whiteboard. The up arrow shows the toolbar, and its pen also opens the whiteboard.")
+val adaptiveContentNotes = notes(
+    "Adaptive UI isn't just picking the right scaffold. Grids go from 2 columns to 4 or 5. Forms shouldn't stretch across a desktop. Content wants a max width.",
+    "Input matters too: touch on phones, keyboard and mouse on desktop, stylus on tablets.",
+    "Demo 5: adaptive grid, max content width, different arrangements. It's a product and interaction decision, not just a layout one.",
 )
 
-val useItNotes = listOf(
-    AnnotatedString("The components are published to Maven Central as io.github.donald-okara:ski."),
-    AnnotatedString("Or work inside this repo: set use_local_shared_components in gradle.properties."),
-    AnnotatedString("Each new slide gets one named notes constant in SlidesNotes.kt.")
+// Part 6: The takeaway
+
+val takeawayNotes = notes(
+    "One: it's not a phone app. Think about people and their contexts. Two: the window decides the space, not the device.",
+    "Three: don't stretch layouts, change the experience. Four: it's about being useful in more situations, not supporting every device.",
+    "\"Sometimes your user wants to sit down and work. Sometimes they want to finish something in ten seconds. Give them both. Meet them where they are.\"",
 )
 
-val questionsNotes = listOf(
-    AnnotatedString("Take questions. Point to the live gallery and the README for the full toolkit."),
-    AnnotatedString("If someone asks about a key, the shortcut guide is one press of C away.")
+val thankYouNotes = notes(
+    "\"And that's adaptive UI in Jetpack Compose. Thank you!\"",
+    "Point at the sample project link if it's on screen.",
 )

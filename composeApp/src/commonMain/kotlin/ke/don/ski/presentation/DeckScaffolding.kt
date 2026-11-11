@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -274,23 +274,50 @@ fun TableOfContent(
             }
 
 
-            itemsIndexed(slides) { index, screen ->
-                TextButton(
-                    onClick = { onJumpToScreen(index) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text = screen.label,
-                        textAlign = TextAlign.Start,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = if (screen == currentSlide) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
+            slides.withIndex()
+                .groupConsecutiveBy { it.value.section }
+                .forEach { (section, entries) ->
+                    if (section != null) {
+                        item(key = "section-${entries.first().index}") {
+                            Text(
+                                text = section,
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(
+                                    top = MaterialTheme.dimens.mediumPadding,
+                                    start = MaterialTheme.dimens.smallPadding
+                                )
+                            )
+                        }
+                    }
+                    items(entries, key = { it.index }) { (index, screen) ->
+                        TextButton(
+                            onClick = { onJumpToScreen(index) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = if (section != null) MaterialTheme.dimens.mediumPadding else 0.dp)
+                        ) {
+                            Text(
+                                text = screen.label,
+                                textAlign = TextAlign.Start,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = if (screen == currentSlide) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            )
+                        }
+                    }
                 }
-
-            }
         }
     }
+}
+/** Splits a list into runs of consecutive elements that share the same [key]. */
+private fun <T, K> Iterable<T>.groupConsecutiveBy(key: (T) -> K): List<Pair<K, List<T>>> {
+    val groups = mutableListOf<Pair<K, MutableList<T>>>()
+    for (element in this) {
+        val k = key(element)
+        val last = groups.lastOrNull()
+        if (last != null && last.first == k) last.second += element else groups += k to mutableListOf(element)
+    }
+    return groups
 }
