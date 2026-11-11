@@ -15,17 +15,23 @@ val bodyFontFamily: FontFamily
     @Composable
     get() = FontFamily(
         Font(Resources.Font.GOOGLE_SANS_EXTRA_LIGHT, FontWeight.Normal),
+        Font(Resources.Font.GOOGLE_SANS_BOLD, FontWeight.Bold),
     )
 
+/** Google Sans Flex ExtraBold: titles and headings, as in the DevFest template. */
 val displayFontFamily: FontFamily
     @Composable
     get() = FontFamily(
-        Font(Resources.Font.GOOGLE_SANS_BOLD, FontWeight.Bold),
+        Font(Resources.Font.GOOGLE_SANS_FLEX_EXTRA_BOLD, FontWeight.ExtraBold),
+        Font(Resources.Font.GOOGLE_SANS_FLEX_EXTRA_BOLD, FontWeight.Bold),
     )
+
+/** Google Sans Bold: smaller headings, where ExtraBold gets heavy. */
 val subheadingsFontFamily: FontFamily
     @Composable
     get() = FontFamily(
-        Font(Resources.Font.GOOGLE_SANS_EXTRA_LIGHT, FontWeight.Bold),
+        Font(Resources.Font.GOOGLE_SANS_BOLD, FontWeight.Bold),
+        Font(Resources.Font.GOOGLE_SANS_EXTRA_LIGHT, FontWeight.Normal),
     )
 
 // Default Material 3 typography values

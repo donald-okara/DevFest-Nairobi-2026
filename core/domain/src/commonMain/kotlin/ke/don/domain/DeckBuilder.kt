@@ -28,6 +28,7 @@ class DeckBuilder(
         header: (@Composable () -> Unit)? = null,
         footer: (@Composable () -> Unit)? = null,
         showFooter: Boolean = true,
+        showHeader: Boolean = true,
         steps: Int = 0,
         content: @Composable () -> Unit
     ) {
@@ -39,6 +40,7 @@ class DeckBuilder(
             frame = frame,
             footer = footer,
             showFooter = showFooter,
+            showHeader = showHeader,
             header = header,
             steps = steps,
             content = content

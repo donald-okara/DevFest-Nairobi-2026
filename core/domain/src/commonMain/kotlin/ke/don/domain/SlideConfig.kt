@@ -20,6 +20,8 @@ data class SlideConfig(
     val header: (@Composable () -> Unit)? = null,
     val footer: (@Composable () -> Unit)? = null,
     val showFooter: Boolean = true,
+    /** Whether the deck-wide header (the DevFest wordmark) shows on this slide. */
+    val showHeader: Boolean = true,
     val steps: Int = 0,
     val content: @Composable () -> Unit,
 ) {

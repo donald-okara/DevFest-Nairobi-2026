@@ -1,5 +1,10 @@
 package ke.don.ski.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -22,10 +27,8 @@ import ke.don.domain.DeckNavigator
 import ke.don.domain.LocalDeckMode
 import ke.don.domain.LocalSharesFrameFlag
 import ke.don.domain.SlideConfig
-import ke.don.domain.SlidesConstants.FRAME_OPACITY
 import ke.don.domain.SlidesConstants.SESSION_DURATION
 import ke.don.domain.frames.SkiFrame
-import ke.don.domain.values.Values
 import ke.don.ski.presentation.ui.MainFooter
 import ke.don.ski.presentation.ui.MainHeader
 import ke.don.ski.presentation.ui.rememberTimerController
@@ -84,7 +87,13 @@ fun PresentationDeck(
 
                         val showFooter = navigator.currentSlide.showFooter
 
-                        mainFrame.Render(header = { MainHeader(deckMode) }, footer = if (showFooter) {
+                        val showHeader = navigator.currentSlide.showHeader
+
+                        mainFrame.Render(header = {
+                            AnimatedVisibility(showHeader, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
+                                MainHeader(deckMode)
+                            }
+                        }, footer = if (showFooter) {
                             {
                                 MainFooter(
                                     showTimer = deckMode == DeckMode.Local,

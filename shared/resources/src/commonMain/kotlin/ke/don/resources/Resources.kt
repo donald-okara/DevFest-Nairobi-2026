@@ -10,6 +10,10 @@ object Resources {
     object Font {
         val GOOGLE_SANS_EXTRA_LIGHT = Res.font.google_sans_regular
         val GOOGLE_SANS_BOLD = Res.font.google_sans_bold
+        /** Static Google Sans Flex instance (wght 800), the template's heading face. OFL, see GoogleSansFlex-OFL.txt. */
+        val GOOGLE_SANS_FLEX_EXTRA_BOLD = Res.font.google_sans_flex_extra_bold
+        /** Static Google Sans Flex instance (wght 820, ROND 100) for the balloon DEVFEST wordmark. */
+        val GOOGLE_SANS_FLEX_BALLOON = Res.font.google_sans_flex_balloon
         val ROBOTO_MONO_EXTRA_LIGHT = Res.font.roboto_mono_extra_light
     }
 

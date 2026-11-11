@@ -25,6 +25,8 @@ Run from the repo root. Gradle config cache and build cache are enabled (`gradle
 ./gradlew :androidApp:assembleDebug
 ```
 
+Verification scope: do not build, run, or test the Android target (`:androidApp`), and don't treat Android compile errors as blockers. Verify changes on Web (Wasm) and Desktop (JVM) only.
+
 Tests and lint: the repo has no test sources and no lint/ktlint setup. Test source sets are generated for every module, so `./gradlew test` runs nothing useful. To run one test once you add one: `./gradlew :core:domain:jvmTest --tests "fully.qualified.TestClass.method"`.
 
 Publishing: `.github/workflows/publish.yml` runs on tag push and calls root `publishToMavenCentral -Pversion=<tag>`. Only `:shared:components` applies the publishing plugin (artifact `io.github.donald-okara:ski`). Bump `ski = ...` in `gradle/libs.versions.toml` when the published version changes.
