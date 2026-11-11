@@ -4,7 +4,10 @@
 
 # Ski: Slides as Compose
 
-**[Live Demo](https://ski-slides.vercel.app)** — press G to switch to the component gallery.
+> **DevFest Nairobi 2026 · Adaptive UI in Jetpack Compose**
+> **[Open the talk deck](https://devfest-nairobi-2026-tau.vercel.app)**: the slides and the live adaptive playground demos, running in the browser on Compose Multiplatform (Wasm). Script: [`docs/talk.md`](docs/talk.md). Run of show: [`docs/flow.md`](docs/flow.md).
+
+**[Ski live demo](https://ski-slides.vercel.app)** (the framework's own sample deck) — press G to switch to the component gallery.
 
 <a href="https://www.buymeacoffee.com/donaldokara">
   <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee" height="50">
@@ -81,12 +84,12 @@ The output is written under `webApp/build/`. The deployable folder is `webApp/bu
 3. Go to the output folder and deploy, naming the project explicitly:
    ```shell
    cd webApp/build/dist/wasmJs/productionExecutable
-   vercel deploy --prod --project ski-slides
+   vercel deploy --prod --project devfest-nairobi-2026
    ```
-4. The first run asks you to log in. Vercel prints the production URL when it finishes.
+4. The first run asks you to log in. Vercel prints the production URL when it finishes. This deck lives at https://devfest-nairobi-2026-tau.vercel.app (the plain `devfest-nairobi-2026.vercel.app` name was already taken).
 
 Notes:
-- Rebuild (step 2) before every deploy. The output folder is regenerated on each build, which also wipes any `.vercel/project.json` link `vercel link` would have written there — that's why `--project ski-slides` is passed explicitly every time instead of relying on a persisted link.
+- Rebuild (step 2) before every deploy. The output folder is regenerated on each build, which also wipes any `.vercel/project.json` link `vercel link` would have written there — that's why `--project devfest-nairobi-2026` is passed explicitly every time instead of relying on a persisted link.
 - Drop `--prod` to get a preview URL instead of updating production.
 - Any other static host works too. Upload the same folder and keep the rewrite-to-`index.html` rule so direct links and `/?slides` load.
 
