@@ -16,6 +16,48 @@ Roast Google ─► Fine, Google has a point ─► The numbers ─► Big scree
 
 The argument is one sentence: **build for the context people are in, and let the window decide the layout, not the device.**
 
+## Presenter setup
+
+There are two ways to run the deck. Pick one, and rehearse on the one you'll present with.
+
+### Desktop (recommended)
+
+Run the **Desktop** configuration in Android Studio, or `./gradlew :desktopApp:run`. Two windows open:
+
+- **Presenter Notes:** your panel, with notes, timer and table of contents. Keep it on the laptop screen.
+- **Slides:** the audience output. Drag it to the projector and make it full screen.
+
+Both windows share one navigator inside the same app, so they never drift apart. Arrow keys work in either window. It needs no network.
+
+### Web (backup, or when you can't run the build)
+
+1. Open **https://devfest-nairobi-2026-tau.vercel.app** in a recent Chrome or Edge on the laptop. The root URL is the presenter panel.
+2. It opens the audience deck (`/?slides`) in a pop-up. If the browser blocks it, click or press any key on the presenter tab once and it opens.
+3. Drag the pop-up to the projector and use the browser's full-screen mode.
+4. **Drive from the presenter tab.** Arrow presses there move the audience window, which follows through the browser's `localStorage`. Sync is one-way: pressing arrows in the audience window moves only that window.
+5. Both windows must be in the same browser profile. A private window, or a second browser, won't sync.
+6. Load the page before the talk. The first load downloads about 28 MB, so don't rely on venue Wi-Fi for it.
+
+To run the web version locally instead of from Vercel: `./gradlew :webApp:wasmJsBrowserDevelopmentRun`, then open the local URL it prints. The same `/` and `/?slides` split applies.
+
+To share the slides without the presenter panel, send **`/?slides`**. Anyone can step through it with the arrow keys.
+
+### Keys (presenter panel)
+
+| Key | Does |
+|---|---|
+| → / Space / Enter | Next reveal or slide |
+| ← / Backspace | Back |
+| T | Table of contents (jump to any slide) |
+| N | Notes panel |
+| F | Flashcards over the slide |
+| H | Show or hide the hint bar |
+| C | Shortcut guide |
+| D | Switch light/dark (each window separately) |
+| W | Whiteboard |
+| ] / [ | Timer +1 / −1 minute |
+| Esc | Dismiss everything |
+
 ## Run of show
 
 Slide numbers match the deck, its table of contents (press **T** in the presenter window), and `talk.md`.
@@ -90,7 +132,10 @@ All six demos run in one playground: a resizable, scaled-down window holding one
 - The playground simulates the window. Inside the deck, `currentWindowAdaptiveInfo()` would report the fullscreen projector window, so the demo app reads the playground's size instead. A real app calls `currentWindowAdaptiveInfo()`, and that's what the code card shows.
 - `Grid` and `FlexBox` are experimental APIs (Compose 1.11+).
 
-**Which window to drive:** the presenter window and the audience window each hold their own playground state. Drive the demo on the audience window, the one being projected, so the room sees every click. Use the presenter window only for arrow presses and notes.
+**Which window to drive:** the presenter window and the audience window each hold their own playground state. Drive the demo on the audience window, the one being projected, so the room sees every click.
+
+- *Desktop:* after the demo, press → in either window to move on.
+- *Web:* sync only runs from the presenter tab to the slides. After the demo, click back into the presenter tab before pressing →. The slides window catches up on that press. Don't press arrows in the slides window, or the two will drift apart until the next press on the presenter tab.
 
 **Fallback:** if the playground misbehaves, press the next arrow to show the code and talk through it. Don't debug on stage. (A pre-recorded clip per demo is still a to-do. See `video.md` for how to bundle one.)
 
@@ -104,6 +149,7 @@ All six demos run in one playground: a resizable, scaled-down window holding one
 
 - [ ] Re-check the slide 4 numbers against the sources in `talk.md`. Google updates them, and the 9x figure is spending, not time.
 - [ ] Run the deck on the demo machine (the **Desktop** run configuration) and click through all six demos on the audience window.
+- [ ] Backup: open the web deck on the same laptop, confirm the slides pop-up opens and follows the presenter tab, and leave the page loaded.
 - [ ] Check the playground is readable from the back of the room at the projector's resolution. Phone width is small at the playground's scale.
 - [ ] Rehearse arrow presses: every reveal slide needs its full count before it moves on (see the Reveals column).
 - [ ] Record a fallback clip for each demo.
