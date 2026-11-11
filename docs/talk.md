@@ -41,9 +41,15 @@ They're actively trying to sell foldables. They want people to buy these devices
 
 And one of the ways to do that is to have developers build applications that actually take advantage of the available screen real estate.
 
-Because nobody wants to buy a foldable, open their favourite application and discover that they're looking at a phone application with a lot of empty space around it.
+Because nobody wants to buy a foldable, open their favourite application and discover that they're looking at a phone application with a lot of empty space around it."
 
-But here's the interesting part.
+## Slide 2: Chicken and egg
+
+**Visual:** Four cards around a loop (better apps, more useful devices, more users, more incentive), revealed one per press. Arrows draw between them; the last press closes the loop and "Which came first?" appears in the middle.
+
+**Speaker:**
+
+"But here's the interesting part.
 
 Google isn't entirely wrong.
 
@@ -55,13 +61,13 @@ And developers need people buying those devices to justify investing in those ex
 
 It's a bit of a feedback loop."
 
-*[Slide: Chicken and egg diagram — better apps → more useful devices → more users → more incentive to build better apps.]*
+*[One card per press. The last press closes the loop.]*
 
 ---
 
 # PART 2 — WHY SHOULD YOU CARE?
 
-## Slide 2: Forget Google's bottom line
+## Slide 3: Forget Google's bottom line
 
 **Visual:** Google logo, followed by a transition to a developer and an end user.
 
@@ -115,7 +121,7 @@ Perhaps they already had a need for more screen real estate, and that's why they
 
 And if your application supports that need, you have an opportunity to become part of their workflow."
 
-## Slide 3: Follow the money
+## Slide 4: Follow the money
 
 **Visual:** One big number per beat, revealed in sequence (state-driven reveal, not duplicate slides):
 
@@ -186,9 +192,9 @@ Notes on the numbers:
 - **All of these are Google's internal data.** No methodology is published. That's what the "Source: Google." footer is for, and it supports the joke.
 - **Older figure, if needed:** tablets delivered ~50% higher revenue per user than phones ([Android Developers Blog, March 2023](https://android-developers.googleblog.com/2023/03/concepts-users-spend-more-time-using-app-on-tablets-than-phones.html)). Dated; use it only as background.
 
-## Slide 4: Applications already doing this
+## Slide 5: Applications already doing this
 
-**Visual:** A montage of familiar products: Notion, Canva, Lightroom, Figma, Power BI.
+**Visual:** Six app cards in a grid: Notion, Canva, Lightroom, Figma, Power BI, Notability. Each shows what the app does on a big screen and on a phone.
 
 **Speaker:**
 
@@ -216,6 +222,8 @@ Figma takes a slightly different approach.
 
 Its mobile application is largely about inspecting designs, reviewing work and testing prototypes. The actual design authoring experience lives elsewhere.
 
+Notability lives on the tablet. Handwritten notes with a stylus, on a screen big enough to write on. On the phone, you're reviewing those notes or recording a lecture.
+
 And then there's Power BI.
 
 You can spend your time building reports and models on desktop, but when you want to check whether a business metric is behaving as expected, you can pull out your phone.
@@ -242,7 +250,7 @@ But the context in which we use these devices often differs."
 
 # PART 3 — WHY MOBILE STILL MATTERS
 
-## Slide 5: Are we abandoning mobile?
+## Slide 6: Are we abandoning mobile?
 
 **Visual:** A dramatic phone image. Perhaps an oversized question mark.
 
@@ -284,7 +292,7 @@ The phone is already with you.
 
 It's convenient, it's accessible, and the interaction is relatively short."
 
-## Slide 6: The power of compact interactions
+## Slide 7: The power of compact interactions
 
 **Visual:** Examples of Google Wallet, M-PESA, weather widgets, calendar widgets and notifications.
 
@@ -344,7 +352,7 @@ These aren't just smaller versions of desktop interactions.
 
 They're interactions that make sense because of the device the user is holding."
 
-## Slide 7: Different devices, different contexts
+## Slide 8: Different devices, different contexts
 
 **Visual:** Three columns.
 
@@ -382,7 +390,7 @@ We're building for people who happen to use screens."
 
 # PART 4 — THE TRANSITION
 
-## Slide 8: Accommodating the user
+## Slide 9: Accommodating the user
 
 **Visual:** Return to the speaker's original phone/desktop comparison.
 
@@ -402,7 +410,7 @@ Let's talk about Compose."
 
 # PART 5 — THE HOW
 
-## Slide 9: What does adaptive UI actually mean?
+## Slide 10: What does adaptive UI actually mean?
 
 **Visual:** The same application shown at compact, medium and expanded window sizes.
 
@@ -433,7 +441,7 @@ We're not just resizing things.
 
 We're reconsidering the layout and interaction model."
 
-## Slide 10: The window is your constraint
+## Slide 11: The window is your constraint
 
 **Visual:** A window changing size continuously, with the layout responding.
 
@@ -459,7 +467,7 @@ How much space does my application actually have?
 
 That is a much more useful constraint to design around."
 
-## Slide 11: Window size classes
+## Slide 12: Window size classes
 
 **Visual:** Three windows illustrating compact, medium and expanded width classes.
 
@@ -502,7 +510,7 @@ We're asking what space we have available.
 
 That's the distinction."
 
-## Slide 12: Adaptive navigation
+## Slide 13: Adaptive navigation
 
 **Visual:** Bottom navigation transforming into a navigation rail and potentially a navigation drawer.
 
@@ -543,7 +551,7 @@ We're not building a second application.
 
 We're adapting the application we already have."
 
-## Slide 13: List-detail layouts
+## Slide 14: List-detail layouts
 
 **Visual:** A mobile list transitioning into a two-pane list/detail layout.
 
@@ -584,7 +592,7 @@ Show:
 
 There are a lot of places where this pattern makes sense."
 
-## Slide 14: Supporting panes
+## Slide 15: Supporting panes
 
 **Visual:** Main content with an additional contextual panel.
 
@@ -617,7 +625,7 @@ Show:
 - Expanded presentation.
 - How supporting content changes visibility.
 
-## Slide 15: It's not just scaffolds
+## Slide 16: It's not just scaffolds
 
 **Visual:** A collection of UI elements showing adaptive spacing, grids, content widths and typography.
 
@@ -655,11 +663,54 @@ Show:
 - Different arrangements.
 - Appropriate spacing and sizing.
 
+## Slide 17: Staggered grids
+
+**Visual:** The playground's Feed: cards of different heights packed into columns.
+
+**Speaker:**
+
+"One more layout before we wrap up.
+
+When your items have different heights, a regular grid leaves gaps. Photos, posts, notes, products.
+
+A staggered grid packs each item into the shortest column."
+
+**DEMO 6: LazyVerticalStaggeredGrid**
+
+Show:
+- `StaggeredGridCells.Adaptive(160.dp)` going from two columns to as many as fit.
+- A header that spans the full line.
+- That it's lazy, so it suits long feeds, unlike `Grid`.
+
+## Slide 18: The biggest unblocker
+
+**Visual:** "The biggest unblocker", kicker "Compose Multiplatform", four points revealed one at a time.
+
+**Speaker:**
+
+"Now, here's the thing that actually changed my mind about all of this.
+
+The biggest unblocker isn't a scaffold.
+
+It's Compose Multiplatform.
+
+The same composables ship to Android, desktop, web and iOS. The window size classes and the adaptive scaffolds you just saw run on desktop too.
+
+So the work you do for tablets turns out to be most of your desktop app.
+
+We can now ship to desktop with confidence. Not as a side project. Not as a second codebase.
+
+And if you want proof: this deck is a Compose Multiplatform app. Every demo you just saw ran in it, on a laptop."
+
+*[Pause.]*
+
+"That doesn't mean every app should ship a desktop build. It means the cost of doing it is now mostly design decisions, not engineering."
+
 ---
 
 # PART 6 — THE TAKEAWAY
 
-## Slide 16: What should you take home?
+## Slide 19: What should you take home?
 
 **Visual:** One application displayed across multiple form factors.
 
@@ -691,9 +742,9 @@ Give them both experiences.
 
 Meet them where they are."
 
-## Slide 17: Thank you
+## Slide 20: Thank you
 
-**Visual:** Same application, multiple form factors. Include links to the sample project and resources.
+**Visual:** The DEVFEST wordmark grows back out of the header. "Thank you!" in moving Google colours, the speaker photo in its ring, the repo link, and confetti bursts every few seconds (click for an extra one).
 
 **Speaker:**
 
@@ -716,7 +767,8 @@ The presentation should follow this progression:
 5. Establish that different form factors serve different contexts.
 6. Transition into Jetpack Compose.
 7. Demonstrate the implementation patterns.
-8. Close with the central thesis.
+8. Name Compose Multiplatform as the biggest unblocker: the adaptive work ships to desktop too.
+9. Close with the central thesis.
 
 ## Tone and delivery
 
@@ -735,7 +787,7 @@ The presentation should follow this progression:
 2. Recruit one as the target for the "No offence, Google" joke.
 3. Introduce the chicken-and-egg analogy.
 4. Use the personal screen-time anecdote.
-5. "Exactly the number you'd want to show developers if you were trying to sell foldables." (Slide 3, eyes on the Googler.)
+5. "Exactly the number you'd want to show developers if you were trying to sell foldables." (Slide 4, eyes on the Googler.)
 6. "I don't want a productivity suite. I want a button."
 7. "I know this makes me sound like I'm trying to convince you to accommodate my needs..."
 8. "Anyway. Let's talk about Compose."
@@ -759,6 +811,7 @@ Prepare a single sample application with:
 - A list-detail experience.
 - A supporting pane.
 - An adaptive grid.
+- A staggered feed.
 - A form with constrained content width.
 
 Prefer one coherent application that evolves throughout the talk rather than five unrelated code snippets.

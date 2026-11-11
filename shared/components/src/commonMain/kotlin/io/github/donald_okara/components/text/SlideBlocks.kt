@@ -25,6 +25,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -204,25 +206,34 @@ fun BulletRow(
     modifier: Modifier = Modifier,
     colors: BulletColors = SlideBlockDefaults.bulletColors(),
 ) {
+    val style = MaterialTheme.typography.headlineSmall
+    // Centre the dot on the first line, whatever the text scale, so wrapped bullets stay aligned.
+    val firstLineHeight = with(LocalDensity.current) { style.lineHeight.toDp() }
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Top
     ) {
         Box(
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .size(Values.Dimens.smallPadding)
-                .clip(CircleShape)
-                .background(colors.dot)
-        )
-        Spacer(modifier = Modifier.size(Values.Dimens.smallPadding))
+            modifier = Modifier.height(firstLineHeight),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(BULLET_DOT_SIZE)
+                    .clip(CircleShape)
+                    .background(colors.dot)
+            )
+        }
+        Spacer(modifier = Modifier.size(Values.Dimens.mediumPadding))
         Text(
             text = text,
-            style = MaterialTheme.typography.headlineSmall,
+            style = style,
             color = colors.text
         )
     }
 }
+
+private val BULLET_DOT_SIZE = 10.dp
 
 /**
  * A short commit SHA shown as a small monospace tag, for citing a commit on screen.

@@ -21,6 +21,7 @@ import ke.don.demos.playground.NAVIGATION_CODE
 import ke.don.demos.playground.PlaygroundDemoSlide
 import ke.don.demos.playground.PlaygroundStage
 import ke.don.demos.playground.SIZE_CLASSES_CODE
+import ke.don.demos.playground.STAGGERED_GRID_CODE
 import ke.don.demos.playground.SUPPORTING_PANE_CODE
 import ke.don.domain.values.Values
 
@@ -29,22 +30,6 @@ import ke.don.domain.values.Values
 // `steps` value in the deck.
 
 // Part 1: The setup
-
-private val feedbackLoop = listOf(
-    TalkColumn("Better apps", "Apps that use the space"),
-    TalkColumn("More useful devices", "The foldable is worth opening"),
-    TalkColumn("More users", "People buy the hardware"),
-    TalkColumn("More incentive", "Developers build better apps"),
-)
-val FEEDBACK_LOOP_STEPS = feedbackLoop.size
-
-/** Slide 1, second half: the chicken-and-egg loop. */
-@Composable
-fun FeedbackLoopSlide() = ColumnsSlide(
-    title = "Chicken, meet egg",
-    kicker = "No offence, Google",
-    columns = feedbackLoop,
-)
 
 // Part 2: Why should you care?
 
@@ -62,69 +47,6 @@ fun BottomLineSlide() = PointsSlide(
     title = "Forget Google's bottom line",
     kicker = "What's in it for you?",
     points = bottomLinePoints,
-)
-
-private data class Stat(val figure: String, val label: String)
-
-private val stats = listOf(
-    Stat("580M+", "large-screen Android devices in use"),
-    Stat("9x", "more spent by phone + large-screen owners"),
-    Stat("14x", "more spent by foldable users"),
-    Stat("~3x", "more time in-app, phone + tablet (entertainment, US)"),
-)
-val FOLLOW_THE_MONEY_STEPS = stats.size + 1
-
-/** Slide 3: one number per step, then the correlation caveat. */
-@Composable
-fun FollowTheMoneySlide(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(Values.Dimens.largePadding),
-        verticalArrangement = Arrangement.spacedBy(Values.Dimens.largePadding),
-    ) {
-        SlideTitle(title = "Follow the money", kicker = "Source: Google")
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(Values.Dimens.mediumPadding),
-        ) {
-            stats.forEachIndexed { i, stat ->
-                RevealItem(index = i + 1, modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stat.figure,
-                        style = MaterialTheme.typography.displayLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Text(stat.label, style = MaterialTheme.typography.titleMedium)
-                }
-            }
-        }
-        RevealItem(index = stats.size + 1) {
-            Text(
-                text = "Correlation, not causation. Still your users.",
-                style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Start,
-            )
-        }
-    }
-}
-
-private val appsDoingThis = listOf(
-    TalkColumn("Notion", "Databases on desktop, quick capture on mobile"),
-    TalkColumn("Canva", "Edit anywhere, design properly on a big screen"),
-    TalkColumn("Lightroom", "Shoot on the phone, finish on desktop"),
-    TalkColumn("Figma", "Mobile is for reviewing, not authoring"),
-    TalkColumn("Power BI", "Build on desktop, check the metric on the phone"),
-)
-val APPS_DOING_THIS_STEPS = appsDoingThis.size
-
-/** Slide 4. */
-@Composable
-fun AppsDoingThisSlide() = ColumnsSlide(
-    title = "Apps already doing this",
-    kicker = "Same product, different jobs",
-    columns = appsDoingThis,
 )
 
 // Part 3: Why mobile still matters
@@ -151,21 +73,6 @@ fun CompactInteractionsSlide() = PointsSlide(
     title = "The power of compact interactions",
     kicker = "Intention → interaction → done",
     points = compactPoints,
-)
-
-private val contexts = listOf(
-    TalkColumn("Desktop", "Deep engagement"),
-    TalkColumn("Tablet / foldable", "Expanded engagement"),
-    TalkColumn("Phone", "Immediate engagement"),
-)
-val CONTEXTS_STEPS = contexts.size
-
-/** Slide 7. */
-@Composable
-fun ContextsSlide() = ColumnsSlide(
-    title = "Different devices, different contexts",
-    kicker = "Tendencies, not rules",
-    columns = contexts,
 )
 
 // Part 4: The transition
@@ -266,6 +173,30 @@ fun AdaptiveContentSlide() = PlaygroundDemoSlide(
     code = CONTENT_CODE,
 )
 
+/** Slide 17, Demo 6: staggered grids. */
+@Composable
+fun StaggeredGridSlide() = PlaygroundDemoSlide(
+    title = "Staggered grids",
+    stage = PlaygroundStage.StaggeredGrid,
+    code = STAGGERED_GRID_CODE,
+)
+
+private val unblockerPoints = listOf(
+    "One codebase: Android, desktop, web and iOS",
+    "Size classes and the adaptive scaffolds run on desktop too",
+    "The work you do for tablets is most of your desktop app",
+    "This deck is a Compose Multiplatform app. So is every demo you just saw.",
+)
+val UNBLOCKER_STEPS = unblockerPoints.size
+
+/** Slide 18: Compose Multiplatform as the biggest unblocker. */
+@Composable
+fun UnblockerSlide() = PointsSlide(
+    title = "The biggest unblocker",
+    kicker = "Compose Multiplatform",
+    points = unblockerPoints,
+)
+
 // Part 6: The takeaway
 
 private val takeaways = listOf(
@@ -283,20 +214,3 @@ fun TakeawaySlide() = PointsSlide(
     kicker = "What to take home",
     points = takeaways,
 )
-
-/** Slide 17. */
-@Composable
-fun ThankYouSlide(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text("Thank you!", style = MaterialTheme.typography.displayLarge, fontWeight = FontWeight.Bold)
-        Text(
-            "Donald Isoe · Adaptive UI in Jetpack Compose",
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
-}

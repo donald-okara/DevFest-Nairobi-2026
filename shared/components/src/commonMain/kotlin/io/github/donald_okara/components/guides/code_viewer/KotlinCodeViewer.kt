@@ -40,6 +40,7 @@ fun KotlinCodeViewerCard(
     darkTheme: Boolean = true,
     toggleFocus: () -> Unit = {},
     toggleTheme: () -> Unit = {},
+    initiallyFolded: Boolean = false,
     code: () -> String
 ) {
     val targetTheme = if (darkTheme) {
@@ -50,7 +51,7 @@ fun KotlinCodeViewerCard(
 
     val colorScheme = animateCodeTheme(targetTheme)
 
-    var foldLambdas by rememberSaveable { mutableStateOf(false) }
+    var foldLambdas by rememberSaveable { mutableStateOf(initiallyFolded) }
 
     val source = remember { code() }
 

@@ -1,6 +1,8 @@
 package ke.don.ski.presentation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -24,7 +26,9 @@ import ke.don.design.theme.TextScale
 import ke.don.design.theme.dimens
 import ke.don.domain.DeckMode
 import ke.don.domain.DeckNavigator
+import ke.don.domain.LocalDeckAnimatedScope
 import ke.don.domain.LocalDeckMode
+import ke.don.domain.LocalDeckSharedTransitionScope
 import ke.don.domain.LocalSharesFrameFlag
 import ke.don.domain.SlideConfig
 import ke.don.domain.SlidesConstants.SESSION_DURATION
@@ -48,6 +52,7 @@ import ke.don.ski.presentation.ui.rememberTimerController
  * @param background An optional composable function to render a custom background behind the deck.
  * @param guidesFrame The [SkiFrame] used to provide structural layout and visual framing for the deck.
  */
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun PresentationDeck(
     slides: List<SlideConfig>,
@@ -89,9 +94,13 @@ fun PresentationDeck(
 
                         val showHeader = navigator.currentSlide.showHeader
 
+                        SharedTransitionLayout {
+                        CompositionLocalProvider(LocalDeckSharedTransitionScope provides this) {
                         mainFrame.Render(header = {
                             AnimatedVisibility(showHeader, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
-                                MainHeader(deckMode)
+                                CompositionLocalProvider(LocalDeckAnimatedScope provides this) {
+                                    MainHeader(deckMode)
+                                }
                             }
                         }, footer = if (showFooter) {
                             {
@@ -110,6 +119,8 @@ fun PresentationDeck(
                                 slides = slides,
                                 navigator = navigator,
                             )
+                        }
+                        }
                         }
                     } else {
                         DeckHost(

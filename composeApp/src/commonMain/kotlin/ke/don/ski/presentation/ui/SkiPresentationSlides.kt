@@ -27,7 +27,9 @@ import ke.don.demos.talk.ListDetailSlide
 import ke.don.demos.talk.SupportingPaneSlide
 import ke.don.demos.talk.TAKEAWAY_STEPS
 import ke.don.demos.talk.TakeawaySlide
-import ke.don.demos.talk.ThankYouSlide
+import ke.don.demos.talk.UNBLOCKER_STEPS
+import ke.don.demos.talk.UnblockerSlide
+import ke.don.demos.talk.StaggeredGridSlide
 import ke.don.demos.talk.WINDOW_CONSTRAINT_STEPS
 import ke.don.demos.talk.WindowConstraintSlide
 import ke.don.demos.talk.WindowSizeClassesSlide
@@ -37,6 +39,7 @@ import ke.don.domain.SlideConfig
 import ke.don.domain.SlidesConstants.SESSION_DURATION
 import ke.don.domain.generateDeck
 import ke.don.domain.timer.TimerController
+import ke.don.introduction.ClosingScreen
 import ke.don.introduction.IntroductionScreen
 import kotlin.time.Duration
 
@@ -112,15 +115,25 @@ fun skiPresentationSlides(sessionDuration: Duration = SESSION_DURATION): List<Sl
                 slide("Demo 5 · It's not just scaffolds", notes = adaptiveContentNotes, steps = PLAYGROUND_STEPS) {
                     AdaptiveContentSlide()
                 }
+                slide("Demo 6 · Staggered grids", notes = staggeredGridNotes, steps = PLAYGROUND_STEPS) {
+                    StaggeredGridSlide()
+                }
+                slide("The biggest unblocker", notes = unblockerNotes, steps = UNBLOCKER_STEPS) {
+                    UnblockerSlide()
+                }
             }
 
             section("Part 6 · The takeaway") {
                 slide("Meet them where they are", notes = takeawayNotes, steps = TAKEAWAY_STEPS) {
                     TakeawaySlide()
                 }
-                slide("Thank you", notes = thankYouNotes, footer = null) {
-                    ThankYouSlide()
-                }
+                slide(
+                    "Thank you",
+                    transition = ScreenTransition.Fade,
+                    notes = thankYouNotes,
+                    showHeader = false,
+                    showFooter = false
+                ) { ClosingScreen() }
             }
         }
     }

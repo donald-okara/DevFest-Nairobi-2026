@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ke.don.design.brand.DevFestWordmark
 import ke.don.design.theme.DevFestColors
+import ke.don.domain.WORDMARK_SHARED_KEY
+import ke.don.domain.deckSharedBounds
 import ke.don.resources.Resources
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -83,7 +85,7 @@ private fun TextSegment(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start
     ) {
-        DevFestWordmark(letterSize = 96.sp)
+        DevFestWordmark(letterSize = 96.sp, modifier = Modifier.deckSharedBounds(WORDMARK_SHARED_KEY))
 
         Spacer(Modifier.height(56.dp))
 
@@ -133,7 +135,7 @@ private val RingArcs = listOf(
 private data class RingArc(val start: Float, val sweep: Float, val color: Color, val outer: Boolean)
 
 @Composable
-private fun SpeakerPhoto(
+internal fun SpeakerPhoto(
     image: DrawableResource,
     modifier: Modifier = Modifier,
     size: Dp = 440.dp,

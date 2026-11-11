@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import ke.don.design.theme.dimens
+import ke.don.domain.LocalDeckAnimatedScope
 import ke.don.domain.LocalRevealStep
 import ke.don.domain.NavDirection
 import ke.don.domain.ScreenTransition
@@ -40,7 +41,10 @@ fun DeckHost(
     ) { index ->
         // The outgoing slide is fully revealed while it animates out.
         val step = if (index == navigator.currentIndex) navigator.currentStep else slides[index].steps
-        CompositionLocalProvider(LocalRevealStep provides step) {
+        CompositionLocalProvider(
+            LocalRevealStep provides step,
+            LocalDeckAnimatedScope provides this,
+        ) {
             slides[index].Render()
         }
     }

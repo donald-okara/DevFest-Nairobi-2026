@@ -12,10 +12,17 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.github.donald_okara.components.guides.code_viewer.KotlinCodeViewer
+import io.github.donald_okara.components.guides.code_viewer.FocusKotlinViewer
+import io.github.donald_okara.components.guides.code_viewer.KotlinCodeViewerCard
 import io.github.donald_okara.components.text.SlideTitle
 import ke.don.domain.LocalRevealStep
 import ke.don.domain.values.Values
@@ -24,8 +31,8 @@ import ke.don.domain.values.Values
 const val PLAYGROUND_STEPS = 1
 
 /**
- * A demo slide: the playground window on the left and, from reveal step 1, the code that
- * matters on the right. The window is interactive; drag its right edge or tap a preset.
+ * A demo slide: the playground window on the left and, from reveal step 1, the code card on
+ * the right. The window is interactive; drag its right edge or tap a preset.
  */
 @Composable
 fun PlaygroundDemoSlide(
@@ -56,13 +63,39 @@ fun PlaygroundDemoSlide(
                 enter = fadeIn() + expandHorizontally(),
                 exit = fadeOut() + shrinkHorizontally(),
             ) {
-                KotlinCodeViewer(
-                    code = code,
-                    shouldFoldLambdas = false,
-                    modifier = Modifier.width(460.dp).fillMaxHeight(),
-                )
+                CodePanel(title = title, code = code)
             }
         }
+    }
+}
+
+/**
+ * The demo's code in a [KotlinCodeViewerCard], lambdas folded to start with so the shape reads
+ * first. The fullscreen button opens [FocusKotlinViewer] for the full, zoomable code.
+ */
+@Composable
+private fun CodePanel(title: String, code: String) {
+    val deckIsDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
+    var darkCode by remember(deckIsDark) { mutableStateOf(deckIsDark) }
+    var focused by remember { mutableStateOf(false) }
+
+    KotlinCodeViewerCard(
+        modifier = Modifier.width(480.dp),
+        darkTheme = darkCode,
+        toggleTheme = { darkCode = !darkCode },
+        toggleFocus = { focused = true },
+        initiallyFolded = true,
+        code = { code },
+    )
+
+    if (focused) {
+        FocusKotlinViewer(
+            title = title,
+            onDismiss = { focused = false },
+            darkTheme = darkCode,
+            toggleTheme = { darkCode = !darkCode },
+            code = { code },
+        )
     }
 }
 
@@ -159,4 +192,19 @@ Grid(config = {
 }) { photos.forEach { Photo(it) } }
 
 Card(Modifier.fillMaxWidth().widthIn(max = 560.dp)) { Form() }
+""".trimIndent()
+
+val STAGGERED_GRID_CODE = """
+LazyVerticalStaggeredGrid(
+    columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
+    verticalItemSpacing = 12.dp,
+    horizontalArrangement = Arrangement.spacedBy(12.dp),
+) {
+    item(span = StaggeredGridItemSpan.FullLine) {
+        Header("Feed")
+    }
+    items(posts) { post ->
+        PostCard(post) // each card picks its own height
+    }
+}
 """.trimIndent()

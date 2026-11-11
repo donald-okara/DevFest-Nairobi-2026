@@ -19,6 +19,8 @@ import ke.don.design.brand.DevFestWordmark
 import io.github.donald_okara.components.DotBullet
 import io.github.donald_okara.components.timer.TimerComponent
 import ke.don.domain.DeckMode
+import ke.don.domain.WORDMARK_SHARED_KEY
+import ke.don.domain.deckSharedBounds
 import ke.don.domain.timer.TimerIntentHandler
 import ke.don.domain.timer.TimerState
 
@@ -97,7 +99,7 @@ fun MainHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        DevFestWordmark(letterSize = 48.sp)
+        DevFestWordmark(letterSize = 48.sp, modifier = Modifier.deckSharedBounds(WORDMARK_SHARED_KEY))
 
         if (mode == DeckMode.Local) {
             Text(

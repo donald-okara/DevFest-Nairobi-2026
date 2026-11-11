@@ -20,12 +20,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.PhotoLibrary
@@ -75,12 +80,13 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 /** Which part of the talk the playground is showing. Each demo slide opens on its own stage. */
-enum class PlaygroundStage { SizeClasses, Navigation, ListDetail, SupportingPane, Content }
+enum class PlaygroundStage { SizeClasses, Navigation, ListDetail, SupportingPane, Content, StaggeredGrid }
 
 enum class Destination(val label: String, val icon: ImageVector) {
     Inbox("Inbox", Icons.Filled.Email),
     Docs("Docs", Icons.Filled.Description),
     Gallery("Gallery", Icons.Filled.PhotoLibrary),
+    Feed("Feed", Icons.Filled.Dashboard),
     Settings("Settings", Icons.Filled.Settings),
 }
 
@@ -88,6 +94,7 @@ private fun PlaygroundStage.startDestination() = when (this) {
     PlaygroundStage.SizeClasses, PlaygroundStage.Navigation, PlaygroundStage.ListDetail -> Destination.Inbox
     PlaygroundStage.SupportingPane -> Destination.Docs
     PlaygroundStage.Content -> Destination.Gallery
+    PlaygroundStage.StaggeredGrid -> Destination.Feed
 }
 
 /**
@@ -178,6 +185,7 @@ private fun AdaptiveApp(start: Destination) {
             Destination.Inbox -> InboxScreen()
             Destination.Docs -> DocsScreen()
             Destination.Gallery -> GalleryScreen()
+            Destination.Feed -> FeedScreen()
             Destination.Settings -> SettingsScreen()
         }
     }
@@ -378,6 +386,44 @@ private fun GalleryScreen() {
                 ) {
                     Text("Photo ${i + 1}", color = Color.White, modifier = Modifier.padding(8.dp))
                 }
+            }
+        }
+    }
+}
+
+// Demo 6: staggered grid
+
+private data class Post(val title: String, val lines: Int, val color: Color)
+
+private val posts = List(18) { i ->
+    Post(
+        title = listOf("Keynote", "Codelab", "Lunch", "Hallway track", "Workshop", "Swag", "Q&A", "Demo booth", "Photo wall")[i % 9],
+        lines = listOf(2, 5, 1, 4, 3, 6, 2, 3, 5)[i % 9],
+        color = tileColors[i % tileColors.size],
+    )
+}
+
+/** Cards of different heights packed into columns. Column count follows the width. */
+@Composable
+private fun FeedScreen() {
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Adaptive(minSize = 160.dp),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalItemSpacing = 12.dp,
+    ) {
+        item(span = StaggeredGridItemSpan.FullLine) { PaneTitle("Feed") }
+        items(posts.size) { i ->
+            val post = posts[i]
+            Card {
+                Box(Modifier.fillMaxWidth().height(24.dp + 18.dp * post.lines).background(post.color.copy(alpha = 0.85f)))
+                Text(
+                    post.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(12.dp),
+                )
             }
         }
     }

@@ -39,6 +39,7 @@ val followTheMoneyNotes = notes(
 val appsDoingThisNotes = notes(
     "Notion: databases and columns on desktop; checking, capturing, quick edits on mobile. Canva: fine on a phone, better on a big screen.",
     "Lightroom: shoot and edit on the phone, finish on desktop. Figma mobile is for inspecting and reviewing, not authoring. Power BI: build on desktop, check the metric on the phone.",
+    "Notability: handwritten notes with a stylus on a tablet; on the phone, review notes and record audio.",
     "Pattern: desktop is creating, organising, analysing. Mobile is capturing, reviewing, monitoring, responding. Not strict rules.",
 )
 
@@ -118,6 +119,19 @@ val adaptiveContentNotes = notes(
     "Gallery: drag the width and watch the FlexBox chips rewrap and the Grid go from 2 to 5 columns. Then open Settings: the form stops at 560dp. Grid and FlexBox are experimental APIs. Next arrow shows the code.",
 )
 
+val staggeredGridNotes = notes(
+    "When items have different heights, a regular grid leaves gaps. A staggered grid packs each item into the shortest column.",
+    "Demo 6: the Feed. Drag from Phone to Desktop: StaggeredGridCells.Adaptive(160.dp) goes from two columns to as many as fit, and the header spans the full line.",
+    "Unlike Grid, this one is lazy and stable: use it for long or unbounded feeds. Next arrow shows the code.",
+)
+
+val unblockerNotes = notes(
+    "Here's the thing that changed my mind about all this. The biggest unblocker isn't a scaffold. It's Compose Multiplatform.",
+    "The same composables ship to Android, desktop, web and iOS. Window size classes and the adaptive scaffolds you just saw run on desktop too, so the tablet work becomes most of a desktop app.",
+    "We can now ship to desktop with confidence, not as a side project. Proof: this deck is a Compose Multiplatform app, and every demo ran in it on a laptop.",
+    "What it doesn't mean: every app should ship a desktop build. It means the cost of doing it is now mostly design, not a second codebase.",
+)
+
 // Part 6: The takeaway
 
 val takeawayNotes = notes(
@@ -128,5 +142,6 @@ val takeawayNotes = notes(
 
 val thankYouNotes = notes(
     "\"And that's adaptive UI in Jetpack Compose. Thank you!\"",
-    "Point at the sample project link if it's on screen.",
+    "The wordmark grows back out of the header. Confetti bursts every few seconds; click the slide for an extra one.",
+    "Point at the repo link for the slides and demos.",
 )
