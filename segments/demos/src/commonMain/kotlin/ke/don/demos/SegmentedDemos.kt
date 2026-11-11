@@ -1,0 +1,70 @@
+package ke.don.demos
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import ke.don.domain.frames.FrameBuilder
+import io.github.donald_okara.components.frames.defaultSkiFrames
+import io.github.donald_okara.components.layout.HorizontallySegmentedScreen
+import io.github.donald_okara.components.layout.VerticallySegmentedScreen
+import ke.don.domain.values.Values
+import ke.don.domain.values.Values.FRAME_OPACITY
+import ke.don.design.theme.dimens
+
+@Composable
+fun HorizontalSegmentsDemo(
+    modifier: Modifier = Modifier,
+) {
+    HorizontallySegmentedScreen(
+        modifier = modifier,
+        initialSegments = segments,
+    )
+}
+
+@Composable
+fun VerticalSegmentsDemo(
+    modifier: Modifier = Modifier,
+) {
+    VerticallySegmentedScreen(
+        modifier = modifier,
+        initialSegments = segments,
+    )
+}
+val segments = listOf(
+    1f to @Composable { SegmentItem(index = 1) },
+    1f to @Composable { SegmentItem(index = 2) },
+    1f to @Composable { SegmentItem(index = 3) },
+)
+
+@Composable
+fun SegmentItem(
+    modifier: Modifier = Modifier,
+    index: Int
+) {
+    val frame = FrameBuilder()
+        .setFrame { basic }
+        .build()
+
+    frame.Render(
+        modifier = modifier
+            .padding(MaterialTheme.dimens.mediumPadding),
+        header = null,
+        footer = null,
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            Text(
+                text = "Segment $index",
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+    }
+
+}
