@@ -744,7 +744,7 @@ Meet them where they are."
 
 ## Slide 20: Thank you
 
-**Visual:** The DEVFEST wordmark grows back out of the header. "Thank you!" in moving Google colours, the speaker photo in its ring, the repo link, and confetti bursts every few seconds (click for an extra one).
+**Visual:** Everything centred. The DEVFEST wordmark grows back out of the header. "Thank you!" drops in letter by letter in Google colours and keeps a gentle wave, followed by "Asante sana", the tagline, the speaker's name and the repo link. Balloons drift up and confetti falls throughout; a click fires a confetti burst.
 
 **Speaker:**
 

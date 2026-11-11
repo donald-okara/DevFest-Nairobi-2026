@@ -43,7 +43,7 @@ Slide numbers match the deck, its table of contents (press **T** in the presente
 | 17 | **Demo 6** · Staggered grids | 5 · How | 1 | 1:30 | 25:50 | `LazyVerticalStaggeredGrid`: uneven cards packed into columns. | "Lazy, so it suits long feeds." |
 | 18 | The biggest unblocker | 5 · How | 4 | 1:00 | 26:50 | Compose Multiplatform: the adaptive work ships to desktop too. This deck is the proof. | "Mostly design decisions, not engineering." |
 | 19 | Meet them where they are | 6 · Takeaway | 4 | 1:30 | 28:20 | Four takeaways, one per press. | "Meet them where they are." |
-| 20 | Thank you | 6 · Takeaway | 0 | 0:10 | 28:30 | The wordmark grows back out of the header. Confetti; click for more. | — |
+| 20 | Thank you | 6 · Takeaway | 0 | 0:10 | 28:30 | Wordmark grows back out of the header; "Thank you!" drops in, then "Asante sana". Balloons and confetti; click for a burst. | — |
 
 ## Checkpoints
 
