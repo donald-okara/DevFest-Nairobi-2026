@@ -48,7 +48,7 @@ Publishing: `.github/workflows/publish.yml` runs on tag push and calls root `pub
 3. **Navigation state.** `DeckNavigator` (`core/domain`) owns `currentIndex` and `direction` as Compose snapshot state. `DeckHost` drives `AnimatedContent` keyed on that index, with per-slide `ScreenTransition` from `SlideConfig`.
 4. **Two windows.** `DeckMode.Local` is the presenter panel: notes, timer, TOC, shortcuts. `DeckMode.Presenter` is the clean audience output. Both are the same deck rendered in different modes.
    - Desktop (`desktopApp/.../ski/main.kt`): two `Window`s share one `DeckNavigator` instance, so they stay in sync in-process.
-   - Web (`webApp/.../WebMain.kt`): `/` (and `/?slides`) is the audience deck (`DeckMode.Presenter`). `/?presenter` is the presenter panel (`DeckMode.Local`): it writes `deckState` to `localStorage` and opens `/?slides` as a popup, which listens for the `storage` event and calls `navigator.goTo`. Web sync is less robust than desktop.
+   - Web (`webApp/.../WebMain.kt`): `/` is the presenter panel (`DeckMode.Local`): it writes `deckState` to `localStorage` and opens `/?slides` as a popup (retrying on the first click or key press if the browser blocks it). `/?slides` is the audience deck (`DeckMode.Presenter`); it listens for the `storage` event and calls `navigator.goTo`. Web sync is less robust than desktop.
 5. **Web shell.** `webApp` (Wasm) opens on the deck (`DeckWebImpl`); press G to toggle the component gallery. The JS target shows the deck only.
 
 ## Components and design

@@ -5,7 +5,7 @@
 # Ski: Slides as Compose
 
 > **DevFest Nairobi 2026 · Adaptive UI in Jetpack Compose**
-> **[Open the talk deck](https://devfest-nairobi-2026-tau.vercel.app)**: the slides and the live adaptive playground demos, running in the browser on Compose Multiplatform (Wasm). Use the arrow keys to move through it. Presenting? Open [`/?presenter`](https://devfest-nairobi-2026-tau.vercel.app/?presenter) for the notes, timer and table of contents; it opens the audience slides in a pop-up and keeps them in sync. Script: [`docs/talk.md`](docs/talk.md). Run of show: [`docs/flow.md`](docs/flow.md).
+> **[Open the talk deck](https://devfest-nairobi-2026-tau.vercel.app/?slides)**: the slides and the live adaptive playground demos, running in the browser on Compose Multiplatform (Wasm). Use the arrow keys to move through it. Presenting? Open [the root URL](https://devfest-nairobi-2026-tau.vercel.app) for the presenter panel (notes, timer, table of contents); it opens the audience slides in a pop-up and keeps them in sync. Script: [`docs/talk.md`](docs/talk.md). Run of show: [`docs/flow.md`](docs/flow.md).
 
 **[Ski live demo](https://ski-slides.vercel.app)** (the framework's own sample deck) — press G to switch to the component gallery.
 
@@ -91,7 +91,7 @@ The output is written under `webApp/build/`. The deployable folder is `webApp/bu
 Notes:
 - Rebuild (step 2) before every deploy. The output folder is regenerated on each build, which also wipes any `.vercel/project.json` link `vercel link` would have written there — that's why `--project devfest-nairobi-2026` is passed explicitly every time instead of relying on a persisted link.
 - Drop `--prod` to get a preview URL instead of updating production.
-- Any other static host works too. Upload the same folder and keep the rewrite-to-`index.html` rule so direct links, `/?slides` and `/?presenter` load.
+- Any other static host works too. Upload the same folder and keep the rewrite-to-`index.html` rule so direct links and `/?slides` load.
 
 ---
 
@@ -152,7 +152,7 @@ These are the parts you interact with at runtime.
 
 **Two windows, synced.**
 - *Desktop:* two windows share one `DeckNavigator` in the same process, so they stay in sync automatically.
-- *Web:* `/` is the audience deck. `/?presenter` is the presenter panel: it writes the current slide to `localStorage` and opens `/?slides` (the audience deck) as a popup. The audience deck listens for the `storage` event and follows. This works, but is less robust than desktop; test it on the browser you present from.
+- *Web:* `/` is the presenter panel: it writes the current slide to `localStorage` and opens `/?slides` (the audience deck) as a popup, on load or, if the browser blocks that, on your first click or key press. The audience deck listens for the `storage` event and follows. This works, but is less robust than desktop; test it on the browser you present from.
 
 ### Keyboard shortcuts
 

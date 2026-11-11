@@ -12,13 +12,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.donald_okara.components.guides.code_viewer.FocusKotlinViewer
@@ -75,8 +73,8 @@ fun PlaygroundDemoSlide(
  */
 @Composable
 private fun CodePanel(title: String, code: String) {
-    val deckIsDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
-    var darkCode by remember(deckIsDark) { mutableStateOf(deckIsDark) }
+    // Code reads best dark, whatever the deck theme. The card's button still toggles it.
+    var darkCode by remember { mutableStateOf(true) }
     var focused by remember { mutableStateOf(false) }
 
     KotlinCodeViewerCard(
