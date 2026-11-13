@@ -771,7 +771,7 @@ Meet them where they are."
 
 ## Slide 21: Thank you
 
-**Visual:** Everything centred. The DEVFEST wordmark grows back out of the header. "Thank you!" drops in letter by letter in Google colours and keeps a gentle wave, followed by "Asante sana", the tagline, the speaker's name and the repo link. Balloons drift up and confetti falls throughout; a click fires a confetti burst.
+**Visual:** Everything centred. The DEVFEST wordmark grows back out of the header. "Thank you!" drops in letter by letter in Google colours and keeps a gentle wave, followed by "Asante sana", the tagline, the speaker's name and the slides link (devfest-nairobi-2026-tau.vercel.app/?slides). Balloons drift up and confetti falls throughout; a click fires a confetti burst.
 
 **Speaker:**
 

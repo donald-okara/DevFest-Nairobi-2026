@@ -65,7 +65,7 @@ import kotlin.random.Random
 @Composable
 fun ClosingScreen(
     modifier: Modifier = Modifier,
-    repoUrl: String = "github.com/donald-okara/DevFest-Nairobi-2026",
+    slidesUrl: String = "devfest-nairobi-2026-tau.vercel.app/?slides",
 ) {
     val time by rememberSeconds()
     var bursts by remember { mutableIntStateOf(0) }
@@ -130,7 +130,7 @@ fun ClosingScreen(
                             .padding(horizontal = 20.dp, vertical = 8.dp)
                     ) {
                         Text(
-                            "Slides and demos · $repoUrl",
+                            "Slides and demos · $slidesUrl",
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.primary,
                         )

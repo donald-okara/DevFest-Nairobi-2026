@@ -156,5 +156,5 @@ val takeawayNotes = notes(
 val thankYouNotes = notes(
     "\"And that's adaptive UI in Jetpack Compose. Thank you!\"",
     "The wordmark grows back out of the header, \"Thank you!\" drops in letter by letter, then \"Asante sana\". Balloons and confetti keep going; click the slide for a confetti burst.",
-    "Point at the repo link for the slides and demos.",
+    "Point at the slides link (devfest-nairobi-2026-tau.vercel.app/?slides): the deck and every demo, live in the browser.",
 )
