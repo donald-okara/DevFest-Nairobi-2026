@@ -86,7 +86,7 @@ The output is written under `webApp/build/`. The deployable folder is `webApp/bu
    cd webApp/build/dist/wasmJs/productionExecutable
    vercel deploy --prod --project devfest-nairobi-2026
    ```
-4. The first run asks you to log in. Vercel prints the production URL when it finishes. This deck lives at https://devfest-nairobi-2026-tau.vercel.app (the plain `devfest-nairobi-2026.vercel.app` name was already taken).
+4. The first run asks you to log in. Vercel prints the production URL when it finishes. This deck lives at https://devfest-nairobi-2026-tau.vercel.app/?slides (the plain `devfest-nairobi-2026.vercel.app` name was already taken).
 
 Notes:
 - Rebuild (step 2) before every deploy. The output folder is regenerated on each build, which also wipes any `.vercel/project.json` link `vercel link` would have written there — that's why `--project devfest-nairobi-2026` is passed explicitly every time instead of relying on a persisted link.
@@ -148,7 +148,7 @@ These are the parts you interact with at runtime.
 
 **Navigation.** `DeckNavigator` holds the current index and direction as Compose state. It exposes `next()`, `previous()`, and `goTo(index)`. The deck renders the current slide inside `AnimatedContent`, and each slide's `transition` decides how it enters.
 
-**Modes.** `DeckMode.Local` is the presenter panel: notes, timer, table of contents, shortcut guide, and hints. `DeckMode.Presenter` is the audience output with no chrome. Modes are provided through `LocalDeckMode`, so components can adapt to them without parameters being threaded through.
+**Modes.** `DeckMode.Local` is the presenter panel: notes, timer, table of contents, shortcut guide, and previous/next slide previews. `DeckMode.Presenter` is the audience output with no chrome. Modes are provided through `LocalDeckMode`, so components can adapt to them without parameters being threaded through.
 
 **Two windows, synced.**
 - *Desktop:* two windows share one `DeckNavigator` in the same process, so they stay in sync automatically.
@@ -166,7 +166,7 @@ These are the parts you interact with at runtime.
 | `Esc` | Dismiss all overlays | Both modes |
 | `T` | Table of contents | Presenter panel |
 | `C` | Shortcut guide | Presenter panel |
-| `H` or `↓` | Show/hide hint | Presenter panel |
+| `H` or `↓` | Show/hide the slide previews (previous and next slide; the current slide scales down to make room) | Presenter panel |
 | `]` / `[` | Timer +1 / -1 minute | Presenter panel |
 | `F` | Show/hide flashcards: the slide's notes as swipeable index cards in the bottom-right corner | Presenter panel |
 | `Ctrl`/`Cmd` + `+` / `-` / `0` | Bigger / smaller / reset deck text | Both modes |

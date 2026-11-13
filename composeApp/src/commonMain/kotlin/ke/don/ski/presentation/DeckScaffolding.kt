@@ -1,6 +1,16 @@
 package ke.don.ski.presentation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +42,6 @@ import io.github.donald_okara.components.guides.keys_shortcuts.DeckShortcuts
 import io.github.donald_okara.components.guides.keys_shortcuts.ShortcutsDictionary
 import io.github.donald_okara.components.guides.notes.Notes
 import io.github.donald_okara.components.guides.notes.NotesComponent
-import io.github.donald_okara.components.guides.notes.NotesHint
 import io.github.donald_okara.components.guides.whiteboard.FocusWhiteboard
 import ke.don.design.theme.TextScale
 import ke.don.design.theme.dimens
@@ -45,6 +54,7 @@ import ke.don.domain.timer.TimerController
 import ke.don.domain.timer.TimerIntentHandler
 import ke.don.ski.navigation.DeckShortcutHandler
 import ke.don.ski.presentation.ui.FlashcardOverlay
+import ke.don.ski.presentation.ui.SlidePreviewBar
 import ke.don.ski.presentation.ui.ToolBar
 import kotlinx.coroutines.yield
 
@@ -186,8 +196,21 @@ fun DeckScaffolding(
         if (mode == DeckMode.Presenter) {
             Box(Modifier.weight(1f)) { content() }
         } else {
-            // Local mode layout with side panels
-            Row(Modifier.weight(1f)) {
+            // Local mode: side panels around the slide, and the slide preview bar (↓ or H) at the
+            // bottom. Opening the bar scales the whole view down instead of reflowing it, so the
+            // slide keeps its aspect ratio; the bar fills the space this frees.
+            BoxWithConstraints(Modifier.weight(1f)) {
+            val barHeight by animateDpAsState(if (showHint) PreviewBarHeight else 0.dp, label = "preview-bar")
+            val scale = if (maxHeight > 0.dp) ((maxHeight - barHeight) / maxHeight).coerceIn(0f, 1f) else 1f
+            Row(
+                Modifier
+                    .fillMaxSize()
+                    .graphicsLayer {
+                        scaleX = scale
+                        scaleY = scale
+                        transformOrigin = TransformOrigin(0.5f, 0f)
+                    }
+            ) {
                 AnimatedVisibility(showTableOfContent) {
                     TableOfContent(
                         modifier = Modifier
@@ -232,17 +255,29 @@ fun DeckScaffolding(
                     )
                 }
             }
-        }
 
-        AnimatedVisibility(showHint && mode == DeckMode.Local) {
-            NotesHint(
-                modifier = Modifier
-                    .height(100.dp),
-                frame = frame
-            )
+            // Fully qualified: the ColumnScope overload would otherwise win here.
+            androidx.compose.animation.AnimatedVisibility(
+                visible = showHint,
+                modifier = Modifier.align(Alignment.BottomCenter),
+                enter = fadeIn() + slideInVertically { it },
+                exit = fadeOut() + slideOutVertically { it },
+            ) {
+                SlidePreviewBar(
+                    slides = slides,
+                    currentIndex = navigator.currentIndex,
+                    frame = frame,
+                    onJumpTo = { navigator.goTo(it) },
+                    modifier = Modifier.fillMaxWidth().height(PreviewBarHeight),
+                )
+            }
+            }
         }
     }
 }
+
+/** Height of the presenter's slide preview bar; the slide view scales down by this much. */
+private val PreviewBarHeight = 176.dp
 
 @Composable
 fun TableOfContent(

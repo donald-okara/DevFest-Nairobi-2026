@@ -49,7 +49,7 @@ sealed class KeyEventHandler(
     )
 
     data object ShowHint : KeyEventHandler(
-        hint = "Show/Hide hint",
+        hint = "Show/Hide slide previews",
         keys = setOf(Key.H, Key.DirectionDown)
     )
 

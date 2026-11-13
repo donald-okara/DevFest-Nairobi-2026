@@ -51,7 +51,7 @@ To share the slides without the presenter panel, send **`/?slides`**. Anyone can
 | T | Table of contents (jump to any slide) |
 | N | Notes panel |
 | F | Flashcards over the slide |
-| H | Show or hide the hint bar |
+| ↓ / H | Show or hide the slide previews: previous and next slide either side of the bottom bar. The current slide scales down to make room, so it keeps its shape. Click a preview to jump to it. |
 | C | Shortcut guide |
 | D | Switch light/dark (each window separately) |
 | W | Whiteboard |
