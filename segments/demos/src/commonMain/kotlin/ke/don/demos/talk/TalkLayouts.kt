@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import io.github.donald_okara.components.reveal.RevealBulletList
@@ -81,6 +82,7 @@ fun StatementSlide(
     statement: String,
     modifier: Modifier = Modifier,
     subline: String? = null,
+    statementStyle: TextStyle = MaterialTheme.typography.displayMedium,
 ) {
     Column(
         modifier = modifier
@@ -91,7 +93,7 @@ fun StatementSlide(
     ) {
         Text(
             text = statement,
-            style = MaterialTheme.typography.displayMedium,
+            style = statementStyle,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
         )

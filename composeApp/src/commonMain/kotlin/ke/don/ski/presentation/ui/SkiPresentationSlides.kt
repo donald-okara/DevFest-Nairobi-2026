@@ -24,6 +24,8 @@ import ke.don.demos.talk.FOLLOW_THE_MONEY_STEPS
 import ke.don.demos.talk.FeedbackLoopSlide
 import ke.don.demos.talk.FollowTheMoneySlide
 import ke.don.demos.talk.ListDetailSlide
+import ke.don.demos.talk.NAV3_INTRO_STEPS
+import ke.don.demos.talk.Navigation3IntroSlide
 import ke.don.demos.talk.SupportingPaneSlide
 import ke.don.demos.talk.TAKEAWAY_STEPS
 import ke.don.demos.talk.TakeawaySlide
@@ -105,6 +107,9 @@ fun skiPresentationSlides(sessionDuration: Duration = SESSION_DURATION): List<Sl
                 }
                 slide("Demo 2 · Adaptive navigation", notes = adaptiveNavigationNotes, steps = PLAYGROUND_STEPS) {
                     AdaptiveNavigationSlide()
+                }
+                slide("Navigation 3 · Scenes", notes = navigation3Notes, steps = NAV3_INTRO_STEPS) {
+                    Navigation3IntroSlide()
                 }
                 slide("Demo 3 · List-detail", notes = listDetailNotes, steps = PLAYGROUND_STEPS) {
                     ListDetailSlide()

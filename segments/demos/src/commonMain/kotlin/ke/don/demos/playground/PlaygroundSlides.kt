@@ -38,14 +38,16 @@ fun PlaygroundDemoSlide(
     stage: PlaygroundStage,
     code: String,
     modifier: Modifier = Modifier,
+    kicker: String = "Live demo",
     initialWidthDp: Float = 360f,
+    initiallyFolded: Boolean = true,
 ) {
     val showCode = LocalRevealStep.current >= 1
     Column(
         modifier = modifier.fillMaxSize().padding(Values.Dimens.mediumPadding),
         verticalArrangement = Arrangement.spacedBy(Values.Dimens.mediumPadding),
     ) {
-        SlideTitle(title = title, kicker = "Live demo")
+        SlideTitle(title = title, kicker = kicker)
         Row(
             modifier = Modifier.weight(1f),
             horizontalArrangement = Arrangement.spacedBy(Values.Dimens.mediumPadding),
@@ -61,18 +63,18 @@ fun PlaygroundDemoSlide(
                 enter = fadeIn() + expandHorizontally(),
                 exit = fadeOut() + shrinkHorizontally(),
             ) {
-                CodePanel(title = title, code = code)
+                CodePanel(title = title, code = code, initiallyFolded = initiallyFolded)
             }
         }
     }
 }
 
 /**
- * The demo's code in a [KotlinCodeViewerCard], lambdas folded to start with so the shape reads
- * first. The fullscreen button opens [FocusKotlinViewer] for the full, zoomable code.
+ * The demo's code in a [KotlinCodeViewerCard], lambdas folded to start with (unless
+ * [initiallyFolded] is false) so the shape reads first. The fullscreen button opens [FocusKotlinViewer] for the full, zoomable code.
  */
 @Composable
-private fun CodePanel(title: String, code: String) {
+internal fun CodePanel(title: String, code: String, initiallyFolded: Boolean) {
     // Code reads best dark, whatever the deck theme. The card's button still toggles it.
     var darkCode by remember { mutableStateOf(true) }
     var focused by remember { mutableStateOf(false) }
@@ -82,7 +84,7 @@ private fun CodePanel(title: String, code: String) {
         darkTheme = darkCode,
         toggleTheme = { darkCode = !darkCode },
         toggleFocus = { focused = true },
-        initiallyFolded = true,
+        initiallyFolded = initiallyFolded,
         code = { code },
     )
 
@@ -130,46 +132,102 @@ NavigationSuiteScaffold(
 }
 """.trimIndent()
 
-val LIST_DETAIL_CODE = """
-val navigator = rememberListDetailPaneScaffoldNavigator<Int>()
-val scope = rememberCoroutineScope()
+// The Navigation 3 intro slide: how NavDisplay picks a Scene, and the shape of a custom strategy.
+val NAV3_INTRO_CODE = """
+NavDisplay(
+    backStack = backStack, // a list you own
+    onBack = { backStack.removeLastOrNull() },
+    // Tried in order: the first Scene wins.
+    // None match? You get a single pane.
+    sceneStrategies = listOf(
+        DialogSceneStrategy<NavKey>(),
+        rememberListDetailSceneStrategy<NavKey>(),
+    ),
+    entryProvider = entryProvider {
+        // each entry<Key>(metadata = role)
+    },
+)
 
-ListDetailPaneScaffold(
-    directive = navigator.scaffoldDirective,
-    value = navigator.scaffoldValue,
-    listPane = {
-        AnimatedPane {
-            Inbox(onOpen = { id ->
-                scope.launch {
-                    navigator.navigateTo(Detail, id)
-                }
+// Need your own layout? Write a strategy.
+class TwoPaneStrategy<T : Any>(
+    private val wide: Boolean,
+) : SceneStrategy<T> {
+    override fun SceneStrategyScope<T>.calculateScene(
+        entries: List<NavEntry<T>>,
+    ): Scene<T>? {
+        if (!wide || entries.size < 2) return null // pass
+        return TwoPaneScene(entries.takeLast(2))
+    }
+}
+""".trimIndent()
+
+// Demos 3 and 4 show Navigation 3: one NavDisplay over a back stack you own, and a scene
+// strategy that decides how many entries share the screen. No navigator, no coroutine scope.
+
+val LIST_DETAIL_CODE = """
+@Serializable data object Inbox : NavKey
+@Serializable data class Conversation(val id: Int) : NavKey
+
+// The back stack is just a list. You own it.
+val backStack = rememberNavBackStack(Inbox)
+
+NavDisplay(
+    backStack = backStack,
+    onBack = { backStack.removeLastOrNull() },
+    // One pane or two? The strategy decides.
+    sceneStrategies = listOf(
+        rememberListDetailSceneStrategy<NavKey>()
+    ),
+    entryProvider = entryProvider {
+        entry<Inbox>(
+            metadata = ListDetailSceneStrategy.listPane(
+                detailPlaceholder = { PickAConversation() }
+            )
+        ) {
+            InboxScreen(onOpen = { id ->
+                backStack.add(Conversation(id))
             })
         }
-    },
-    detailPane = {
-        AnimatedPane {
-            Conversation(navigator.currentDestination?.contentKey)
+        entry<Conversation>(
+            metadata = ListDetailSceneStrategy.detailPane()
+        ) { key ->
+            ConversationScreen(key.id)
         }
     },
 )
 """.trimIndent()
 
 val SUPPORTING_PANE_CODE = """
-val navigator = rememberSupportingPaneScaffoldNavigator()
+@Serializable data object Document : NavKey
+@Serializable data object Contents : NavKey
 
-SupportingPaneScaffold(
-    directive = navigator.scaffoldDirective,
-    value = navigator.scaffoldValue,
-    mainPane = {
-        AnimatedPane { Document() }
-    },
-    supportingPane = {
-        AnimatedPane { ContentsAndProperties() }
+val backStack = rememberNavBackStack(Document)
+
+NavDisplay(
+    backStack = backStack,
+    onBack = { backStack.removeLastOrNull() },
+    sceneStrategies = listOf(
+        rememberSupportingPaneSceneStrategy<NavKey>(
+            // Back dismisses the supporting pane
+            backNavigationBehavior = BackNavigationBehavior
+                .PopUntilCurrentDestinationChange,
+        )
+    ),
+    entryProvider = entryProvider {
+        entry<Document>(
+            metadata = SupportingPaneSceneStrategy.mainPane()
+        ) {
+            DocumentScreen(onContents = {
+                backStack.add(Contents)
+            })
+        }
+        entry<Contents>(
+            metadata = SupportingPaneSceneStrategy.supportingPane()
+        ) {
+            ContentsAndProperties()
+        }
     },
 )
-
-// Hidden on compact? Offer a button:
-navigator.scaffoldValue[Supporting] == PaneAdaptedValue.Hidden
 """.trimIndent()
 
 val CONTENT_CODE = """

@@ -549,9 +549,33 @@ Show:
 
 We're not building a second application.
 
-We're adapting the application we already have."
+We're adapting the application we already have.
 
-## Slide 14: List-detail layouts
+Now hold that thought about the back stack. Next slide, it becomes the whole story."
+
+## Slide 14: Navigation 3
+
+**Visual:** "Navigation 3", kicker "Navigation is state. Layout is a strategy." Four points revealed one at a time, then a code card: `NavDisplay` with a list of scene strategies, and the shape of a custom `SceneStrategy`.
+
+**Speaker:**
+
+"Before we put two panes on the screen, we need to talk about how navigation decides what's on the screen. That's Navigation 3.
+
+First: the back stack is just a list. You own it. Going forward is adding to it. Going back is removing from it. Nothing is hiding your navigation state from you.
+
+Second: every entry can describe itself. This screen is a list. This one is a detail. This one is a dialog. The screen doesn't know how it will be laid out, and it doesn't need to.
+
+Third, and this is the bit I want you to remember: scene strategies. NavDisplay asks each strategy, in order: given this back stack, do you want to show something? A strategy looks at the entries on top and their roles, and either returns a Scene or passes. The first Scene wins. If nobody claims it, you get a single pane.
+
+Which means the same back stack can be one pane on a phone and two or three panes on a tablet. Resize the window and the Scene changes. The back stack doesn't.
+
+And if the built-in strategies don't fit, you write your own: return a Scene, or return null to pass. Bottom sheets, a three-column desktop layout, whatever your product needs.
+
+Navigation is state. Layout is a strategy.
+
+Let's look at two strategies Material gives us."
+
+## Slide 15: List-detail layouts
 
 **Visual:** A mobile list transitioning into a two-pane list/detail layout.
 
@@ -577,9 +601,9 @@ Now the user can switch between conversations without constantly navigating back
 
 This is where list-detail layouts become particularly useful.
 
-Compose provides ListDetailPaneScaffold for this kind of experience."
+Navigation 3 gives us this with a scene strategy: ListDetailSceneStrategy."
 
-**DEMO 3: ListDetailPaneScaffold**
+**DEMO 3: NavDisplay + ListDetailSceneStrategy (Navigation 3)**
 
 Show:
 - Compact: list and detail as separate navigation destinations.
@@ -590,9 +614,11 @@ Show:
 
 "Think about email clients, messaging applications, file browsers and even banking applications.
 
-There are a lot of places where this pattern makes sense."
+There are a lot of places where this pattern makes sense.
 
-## Slide 15: Supporting panes
+And look at the code. It's the same NavDisplay you'd write for a phone app. Opening a conversation is adding a key to the back stack. The entries say list pane and detail pane, and the strategy from the last slide does the rest."
+
+## Slide 16: Supporting panes
 
 **Visual:** Main content with an additional contextual panel.
 
@@ -614,18 +640,19 @@ On a compact screen, that supporting information might need to be hidden behind 
 
 On a larger screen, we can afford to keep it visible.
 
-That's another pattern we can implement with SupportingPaneScaffold.
+That's another scene strategy in Navigation 3: SupportingPaneSceneStrategy.
 
 The important thing is that the additional space should give us an opportunity to provide more utility, not just more whitespace."
 
-**DEMO 4: SupportingPaneScaffold**
+**DEMO 4: NavDisplay + SupportingPaneSceneStrategy (Navigation 3)**
 
 Show:
 - Compact presentation.
 - Expanded presentation.
 - How supporting content changes visibility.
+- The code: same NavDisplay and back stack as Demo 3; only the strategy and the entry roles changed.
 
-## Slide 16: It's not just scaffolds
+## Slide 17: It's not just scaffolds
 
 **Visual:** A collection of UI elements showing adaptive spacing, grids, content widths and typography.
 
@@ -663,7 +690,7 @@ Show:
 - Different arrangements.
 - Appropriate spacing and sizing.
 
-## Slide 17: Staggered grids
+## Slide 18: Staggered grids
 
 **Visual:** The playground's Feed: cards of different heights packed into columns.
 
@@ -682,7 +709,7 @@ Show:
 - A header that spans the full line.
 - That it's lazy, so it suits long feeds, unlike `Grid`.
 
-## Slide 18: The biggest unblocker
+## Slide 19: The biggest unblocker
 
 **Visual:** "The biggest unblocker", kicker "Compose Multiplatform", four points revealed one at a time.
 
@@ -694,7 +721,7 @@ The biggest unblocker isn't a scaffold.
 
 It's Compose Multiplatform.
 
-The same composables ship to Android, desktop, web and iOS. The window size classes and the adaptive scaffolds you just saw run on desktop too.
+The same composables ship to Android, desktop, web and iOS. The window size classes, Navigation 3 and the scene strategies you just saw run on desktop and web too. The same back stack, the same strategy, everywhere.
 
 So the work you do for tablets turns out to be most of your desktop app.
 
@@ -710,7 +737,7 @@ And if you want proof: this deck is a Compose Multiplatform app. Every demo you 
 
 # PART 6 — THE TAKEAWAY
 
-## Slide 19: What should you take home?
+## Slide 20: What should you take home?
 
 **Visual:** One application displayed across multiple form factors.
 
@@ -728,7 +755,7 @@ Your application should respond to the actual window constraints.
 
 Third, don't just stretch your layouts.
 
-Think about how the experience should change.
+Think about how the experience should change. With Navigation 3, that's a scene strategy, not a rewrite.
 
 And finally, remember that adaptive UI isn't an exercise in supporting as many devices as possible.
 
@@ -742,7 +769,7 @@ Give them both experiences.
 
 Meet them where they are."
 
-## Slide 20: Thank you
+## Slide 21: Thank you
 
 **Visual:** Everything centred. The DEVFEST wordmark grows back out of the header. "Thank you!" drops in letter by letter in Google colours and keeps a gentle wave, followed by "Asante sana", the tagline, the speaker's name and the repo link. Balloons drift up and confetti falls throughout; a click fires a confetti burst.
 
@@ -802,6 +829,8 @@ Do not explain the abandoned "but" joke.
 - Keep navigation state and selected-item state coherent across layout changes.
 - Distinguish layout adaptation from input adaptation.
 - Avoid implying that supporting scaffolds automatically makes an application fully adaptive.
+- Navigation 3 on Compose Multiplatform (1.10+): on iOS and web, back-stack keys must be registered for polymorphic serialization so `rememberNavBackStack` can save them. Browser back/forward history isn't integrated with multiplatform Nav 3 yet. Keep both for Q&A.
+- The Demo 3 and 4 code cards show Nav 3 scene strategies; the playground itself is built on the Material pane scaffolds. The behaviour on screen is the same, with one difference: with `SupportingPaneSceneStrategy`, the supporting pane shows only while its entry is on the back stack.
 - Include accessibility, keyboard navigation and large-screen testing where time permits.
 
 ## Potential live-demo repository

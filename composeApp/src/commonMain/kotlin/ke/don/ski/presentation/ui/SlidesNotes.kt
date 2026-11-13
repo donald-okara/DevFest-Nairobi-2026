@@ -94,22 +94,35 @@ val windowSizeClassesNotes = notes(
 val adaptiveNavigationNotes = notes(
     "Bottom navigation is natural on a phone: thumb reach, familiar, cheap on space. With more width, a rail; even more, a permanent drawer.",
     "Demo 2: NavigationSuiteScaffold. Compact, then expanded, watch the navigation type change.",
-    "\"We're not building a second application. We're adapting the one we already have.\" Back-stack behaviour is out of scope.",
+    "\"We're not building a second application. We're adapting the one we already have.\" Then the teaser: \"Hold that thought about the back stack. Next slide, it becomes the whole story.\"",
     "Drag from Phone to Desktop: bottom bar, then rail at 600dp, then drawer at 1200dp. Next arrow shows the NavigationSuiteScaffold code.",
+)
+
+val navigation3Notes = notes(
+    "Bridge: \"Before we put two panes on screen, we need to talk about how navigation decides what's on screen. That's Navigation 3.\" Stable, Compose-first, and on Compose Multiplatform since 1.10.",
+    "Press 1, the back stack: it's a plain list you own. Going forward is add(), going back is removeLastOrNull(). No NavController hiding the state from you: you can read it, save it, test it.",
+    "Press 2, roles: every entry can carry metadata. A screen says \"I'm a list pane\", \"I'm a detail pane\", \"I'm a dialog\". The screen doesn't know or care how it will be laid out.",
+    "Press 3, scene strategies: NavDisplay asks each SceneStrategy in turn, \"Given this back stack, do you want to show a Scene?\" A strategy looks at the top entries and their roles (and the window, for adaptive ones) and either returns a Scene or returns null to pass. First Scene wins; if nobody claims it, you get a single pane.",
+    "Press 4, the payoff: the same back stack renders as one pane on a phone and two or three on a tablet. Resize the window and the Scene changes; the back stack doesn't. That's why selection survives a resize in the next demo.",
+    "Press 5, the code: point at sceneStrategies, the list tried in order. Dialog and list-detail strategies ship in the box (Material's adaptive-navigation3 gives list-detail and supporting pane). Then the custom one: calculateScene returns null to pass, or a Scene. Bottom sheets, a three-column desktop layout, your own design: same shape.",
+    "Land it: \"Navigation is state. Layout is a strategy.\" Then: \"Let's see the two Material strategies.\"",
+    "If asked (Q&A, not on stage): on iOS and web the back-stack keys need registering for polymorphic serialization so rememberNavBackStack can save them. Browser back/forward history isn't wired into multiplatform Nav 3 yet. Desktop and Android need nothing extra.",
 )
 
 val listDetailNotes = notes(
     "Messaging app: on a phone, tap a conversation and navigate in. With more space, keep the list and the conversation side by side.",
-    "Demo 3: ListDetailPaneScaffold. Compact: separate destinations. Expanded: side by side. Selection survives the resize.",
-    "What it doesn't show: state across process death. Email, files, banking: lots of places this fits.",
-    "On Phone, tap a message, then switch to Tablet: the selection is still open, now beside the list. Back on Phone, the detail shows a back arrow. Next arrow shows the code.",
+    "Demo 3: list-detail with ListDetailSceneStrategy. On Phone, tap a message, then switch to Tablet: the selection is still open, now beside the list. Back on Phone, the detail shows a back arrow.",
+    "Email, files, banking: lots of places this fits. Next arrow shows the code.",
+    "Code: the same NavDisplay you'd write for a phone app. Opening a conversation is backStack.add(Conversation(id)). The entries just say listPane and detailPane; the strategy from the last slide does the rest. Same back stack, phone or tablet.",
 )
 
 val supportingPaneNotes = notes(
     "Sometimes two panes aren't enough. A document editor wants a table of contents, formatting, properties.",
-    "Demo 4: SupportingPaneScaffold. Compact hides the supporting content behind an interaction; expanded keeps it visible.",
-    "The extra space should add utility, not whitespace.",
+    "Demo 4: supporting pane. Compact hides the supporting content behind an interaction; expanded keeps it visible. The extra space should add utility, not whitespace.",
     "On Phone, tap Contents to open the supporting pane. Widen to Laptop: it stays beside the document. Next arrow shows the code.",
+    "Code: look how little changed from the last slide. Same NavDisplay, same back stack, same entryProvider. Swap ListDetailSceneStrategy for SupportingPaneSceneStrategy and tag the entries mainPane and supportingPane. That's the whole pattern change.",
+    "Showing the panel is backStack.add(Contents). Back dismisses it, because of PopUntilCurrentDestinationChange. No scaffold navigator, no coroutine scope, no pane state to sync: the back stack is the single source of truth.",
+    "If someone spots it: in a real Nav 3 app the supporting pane only shows when Contents is on the back stack. Want it there from the start on wide windows? Add it when the document opens. It's just another entry.",
 )
 
 val adaptiveContentNotes = notes(
@@ -127,7 +140,7 @@ val staggeredGridNotes = notes(
 
 val unblockerNotes = notes(
     "Here's the thing that changed my mind about all this. The biggest unblocker isn't a scaffold. It's Compose Multiplatform.",
-    "The same composables ship to Android, desktop, web and iOS. Window size classes and the adaptive scaffolds you just saw run on desktop too, so the tablet work becomes most of a desktop app.",
+    "The same composables ship to Android, desktop, web and iOS. Window size classes, Navigation 3 and the scene strategies you just saw run on desktop and web too: the same back stack, the same strategy, everywhere. So the tablet work becomes most of a desktop app.",
     "We can now ship to desktop with confidence, not as a side project. Proof: this deck is a Compose Multiplatform app, and every demo ran in it on a laptop.",
     "What it doesn't mean: every app should ship a desktop build. It means the cost of doing it is now mostly design, not a second codebase.",
 )
@@ -136,7 +149,7 @@ val unblockerNotes = notes(
 
 val takeawayNotes = notes(
     "One: it's not a phone app. Think about people and their contexts. Two: the window decides the space, not the device.",
-    "Three: don't stretch layouts, change the experience. Four: it's about being useful in more situations, not supporting every device.",
+    "Three: don't stretch layouts, change the experience; with Nav 3, that's a scene strategy, not a rewrite. Four: it's about being useful in more situations, not supporting every device.",
     "\"Sometimes your user wants to sit down and work. Sometimes they want to finish something in ten seconds. Give them both. Meet them where they are.\"",
 )
 
