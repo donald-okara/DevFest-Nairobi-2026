@@ -5,3 +5,10 @@ html, body {
     padding: 0;
     overflow: hidden;
 }
+
+/* Touch: let the deck handle swipes instead of the browser scrolling, zooming or
+   pull-to-refresh (swipe down opens the toolbar). */
+html, body, canvas {
+    touch-action: none;
+    overscroll-behavior: none;
+}

@@ -78,4 +78,19 @@ class DeckShortcutHandler(
         actions.getValue(handler).invoke()
         return true
     }
+
+    /**
+     * Runs the arrow key action that matches a touch swipe. The finger moves opposite to the arrow,
+     * like dragging the slide itself: swipe left for → (next), right for ← (previous), up for ↓
+     * (slide previews, which rise from the bottom) and down for ↑ (toolbar, which drops from the top).
+     */
+    fun handleSwipe(direction: SwipeDirection) {
+        val handler = when (direction) {
+            SwipeDirection.Left -> KeyEventHandler.Next
+            SwipeDirection.Right -> KeyEventHandler.Previous
+            SwipeDirection.Up -> KeyEventHandler.ShowHint
+            SwipeDirection.Down -> KeyEventHandler.ShowToolBar
+        }
+        actions[handler]?.invoke()
+    }
 }

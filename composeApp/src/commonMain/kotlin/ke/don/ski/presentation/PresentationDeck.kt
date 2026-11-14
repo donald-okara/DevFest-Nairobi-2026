@@ -51,6 +51,8 @@ import ke.don.ski.presentation.ui.rememberTimerController
  * @param navigator The [DeckNavigator] used to manage the current slide state and transitions.
  * @param background An optional composable function to render a custom background behind the deck.
  * @param guidesFrame The [SkiFrame] used to provide structural layout and visual framing for the deck.
+ * @param canvas Locks the slide area to an aspect ratio and scales it down on small screens.
+ *   Pass null to let slides fill whatever space the window gives them.
  */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -60,7 +62,8 @@ fun PresentationDeck(
     background: Background? = null,
     shareFrame: Boolean = false,
     guidesFrame: SkiFrame,
-    mainFrame: SkiFrame
+    mainFrame: SkiFrame,
+    canvas: SlideCanvas? = SlideCanvas(),
 ) {
     val deckMode = LocalDeckMode.current
 
@@ -85,7 +88,8 @@ fun PresentationDeck(
                     timer = timerController,
                     textScale = textScale,
                     onTextScaleChange = { textScale = it },
-                    navigator = navigator
+                    navigator = navigator,
+                    canvas = canvas,
                 ) {
                     if (shareFrame) {
                         val timerState by timerController.state.collectAsState()

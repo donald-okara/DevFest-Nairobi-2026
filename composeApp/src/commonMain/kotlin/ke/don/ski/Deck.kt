@@ -11,6 +11,7 @@ import ke.don.domain.DeckNavigator
 import ke.don.domain.LocalDeckMode
 import ke.don.domain.SlideConfig
 import ke.don.ski.presentation.PresentationDeck
+import ke.don.ski.presentation.SlideCanvas
 import ke.don.ski.presentation.ui.skiPresentationSlides
 
 /**
@@ -22,12 +23,15 @@ import ke.don.ski.presentation.ui.skiPresentationSlides
  * @param navigator Navigator responsible for slide/screen navigation within the deck.
  * @param mode Mode to use for the deck (for example local or remote presentation behavior).
  * @param slides List of slide configurations to display in the deck.
+ * @param canvas Locks slides to a 16:9 area that is centred and scaled down on small or oddly
+ *   shaped screens (phones, ultrawides). Pass null to let slides fill the window.
  */
 @Composable
 fun Deck(
     mode: DeckMode = DeckMode.Local,
     slides: List<SlideConfig> = skiPresentationSlides(),
     navigator: DeckNavigator = remember { DeckNavigator(slides) },
+    canvas: SlideCanvas? = SlideCanvas(),
 ) {
     CompositionLocalProvider(
         // Only for slides that build a frame themselves (the Ski frame demos); the deck chrome uses none.
@@ -40,7 +44,8 @@ fun Deck(
             background = null,
             navigator = navigator,
             slides = slides,
-            shareFrame = true
+            shareFrame = true,
+            canvas = canvas,
         )
     }
 }

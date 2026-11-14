@@ -2,20 +2,27 @@ package io.github.donald_okara.components.guides.keys_shortcuts
 
 import androidx.compose.ui.input.key.Key
 
+/**
+ * @param gesture Touch alternative shown in the shortcuts guide, such as "Swipe ←". Null when the
+ *   action has no gesture.
+ */
 sealed class KeyEventHandler(
     val hint: String,
     val keys: Set<Key>,
+    val gesture: String? = null,
 ) {
     fun matches(key: Key): Boolean = key in keys
 
     data object Next : KeyEventHandler(
         hint = "Next Slide",
-        keys = setOf(Key.DirectionRight, Key.Spacebar, Key.Enter)
+        keys = setOf(Key.DirectionRight, Key.Spacebar, Key.Enter),
+        gesture = "Swipe ←"
     )
 
     data object Previous : KeyEventHandler(
         hint = "Previous Slide",
-        keys = setOf(Key.DirectionLeft, Key.Backspace)
+        keys = setOf(Key.DirectionLeft, Key.Backspace),
+        gesture = "Swipe →"
     )
 
     data object SwitchTheme : KeyEventHandler(
@@ -25,7 +32,8 @@ sealed class KeyEventHandler(
 
     data object ShowToolBar : KeyEventHandler(
         hint = "Show/Hide Toolbar",
-        keys = setOf(Key.DirectionUp)
+        keys = setOf(Key.DirectionUp),
+        gesture = "Swipe ↓"
     )
 
     data object ToggleWhiteboard : KeyEventHandler(
@@ -50,7 +58,8 @@ sealed class KeyEventHandler(
 
     data object ShowHint : KeyEventHandler(
         hint = "Show/Hide slide previews",
-        keys = setOf(Key.H, Key.DirectionDown)
+        keys = setOf(Key.H, Key.DirectionDown),
+        gesture = "Swipe ↑"
     )
 
     data object ShowNotes : KeyEventHandler(

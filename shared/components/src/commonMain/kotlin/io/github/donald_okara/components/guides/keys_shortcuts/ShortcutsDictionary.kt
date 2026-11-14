@@ -51,7 +51,8 @@ fun ShortcutsDictionary(
             items(shortcuts) { shortcut ->
                 ShortcutRow(
                     hint = shortcut.hint,
-                    keys = shortcut.keys
+                    keys = shortcut.keys,
+                    gesture = shortcut.gesture
                 )
             }
         }
@@ -63,6 +64,7 @@ private fun ShortcutRow(
     modifier: Modifier = Modifier,
     hint: String,
     keys: Set<Key>,
+    gesture: String? = null,
 ) {
     // 1. Use Card for a better container with elevation and shape
     Card(
@@ -94,8 +96,9 @@ private fun ShortcutRow(
                 maxItemsInEachRow = 2
             ) {
                 keys.forEach { key ->
-                    KeyChip(key)
+                    KeyChip(key.displayName())
                 }
+                gesture?.let { KeyChip(it, isGesture = true) }
             }
         }
     }
@@ -103,11 +106,12 @@ private fun ShortcutRow(
 
 
 @Composable
-private fun KeyChip(key: Key) {
+private fun KeyChip(label: String, isGesture: Boolean = false) {
     Box(
         modifier = Modifier
             .background(
-                MaterialTheme.colorScheme.secondaryContainer,
+                // Touch gestures use a different tint so they read apart from keyboard keys.
+                if (isGesture) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.secondaryContainer,
                 RoundedCornerShape(Values.Dimens.smallPadding)
             )
             .border(
@@ -118,7 +122,7 @@ private fun KeyChip(key: Key) {
             .padding(horizontal = Values.Dimens.smallPadding, vertical = Values.Dimens.tinyPadding)
     ) {
         Text(
-            text = key.displayName(),
+            text = label,
             style = MaterialTheme.typography.labelMedium
         )
     }

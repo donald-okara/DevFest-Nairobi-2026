@@ -53,6 +53,7 @@ import ke.don.domain.frames.SkiFrame
 import ke.don.domain.timer.TimerController
 import ke.don.domain.timer.TimerIntentHandler
 import ke.don.ski.navigation.DeckShortcutHandler
+import ke.don.ski.navigation.deckSwipeGestures
 import ke.don.ski.presentation.ui.FlashcardOverlay
 import ke.don.ski.presentation.ui.SlidePreviewBar
 import ke.don.ski.presentation.ui.ToolBar
@@ -69,6 +70,7 @@ fun DeckScaffolding(
     textScale: Float,
     onTextScaleChange: (Float) -> Unit,
     switchTheme: () -> Unit,
+    canvas: SlideCanvas? = SlideCanvas(),
     content: @Composable () -> Unit,
 ) {
     val mode = LocalDeckMode.current
@@ -168,6 +170,8 @@ fun DeckScaffolding(
             .focusable()
             .onFocusChanged { state -> hasFocus = state.hasFocus || state.isFocused }
             .onKeyEvent(shortcutDispatcher::handle)
+            // The whiteboard takes text input, so swipes on it must not change slides.
+            .deckSwipeGestures(enabled = !showWhiteboard, onSwipe = shortcutDispatcher::handleSwipe)
     ) {
         AnimatedVisibility(showToolBar) {
             ToolBar(
@@ -194,7 +198,7 @@ fun DeckScaffolding(
         }
 
         if (mode == DeckMode.Presenter) {
-            Box(Modifier.weight(1f)) { content() }
+            Box(Modifier.weight(1f)) { SlideCanvasBox(canvas) { content() } }
         } else {
             // Local mode: side panels around the slide, and the slide preview bar (↓ or H) at the
             // bottom. Opening the bar scales the whole view down instead of reflowing it, so the
@@ -224,7 +228,7 @@ fun DeckScaffolding(
                 }
 
                 Box(Modifier.weight(1f)) {
-                    content()
+                    SlideCanvasBox(canvas) { content() }
                     if (showFlashcard) {
                         FlashcardOverlay(notes = navigator.currentSlide.notes)
                     }

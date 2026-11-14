@@ -88,7 +88,7 @@ fun SlidePreviewBar(
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    text = "↓ or H hides this · F for flashcards",
+                    text = "↓, H or swipe up hides this · F for flashcards",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
