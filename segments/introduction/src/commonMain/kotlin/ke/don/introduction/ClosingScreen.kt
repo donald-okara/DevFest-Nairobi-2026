@@ -5,6 +5,8 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,7 +18,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.alexzhirkevich.qrose.rememberQrCodePainter
 import io.github.donald_okara.components.charts.Confetti
 import ke.don.design.brand.DevFestWordmark
 import ke.don.design.theme.DevFestColors
@@ -59,6 +63,7 @@ import kotlin.random.Random
  * - the DEVFEST wordmark grows back out of the header,
  * - "Thank you!" drops in letter by letter in Google colours, then keeps a gentle wave,
  * - "Asante sana" follows underneath,
+ * - a QR code for the live slides sits beside the speaker's name,
  * - balloons drift up and confetti falls the whole time,
  * - a click anywhere fires a confetti burst.
  */
@@ -117,29 +122,58 @@ fun ClosingScreen(
             }
             Spacer(Modifier.height(32.dp))
             FadeUp(delayMillis = 1900) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Donald Isoe",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Spacer(Modifier.height(12.dp))
-                    Box(
-                        Modifier
-                            .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                            .padding(horizontal = 20.dp, vertical = 8.dp)
-                    ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(32.dp),
+                ) {
+                    Column(horizontalAlignment = Alignment.End) {
                         Text(
-                            "Slides and demos · $slidesUrl",
+                            "Donald Isoe",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            "Scan for the slides\nand live demos",
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.primary,
+                            textAlign = TextAlign.End,
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            slidesUrl,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
+                    SlidesQrCode(url = slidesUrl)
                 }
             }
         }
 
         Confetti(trigger = burst, modifier = Modifier.fillMaxSize())
+    }
+}
+
+/**
+ * QR code for [url], black on a white tile so phones can scan it in light and dark themes alike.
+ * A scheme is added when [url] has none, so scanners open it as a link rather than plain text.
+ */
+@Composable
+private fun SlidesQrCode(url: String, modifier: Modifier = Modifier) {
+    val link = if (url.startsWith("http")) url else "https://$url"
+    val shape = RoundedCornerShape(16.dp)
+    Box(
+        modifier
+            .background(Color.White, shape)
+            .border(2.dp, MaterialTheme.colorScheme.primary, shape)
+            .padding(12.dp)
+    ) {
+        Image(
+            painter = rememberQrCodePainter(link),
+            contentDescription = "QR code for $url",
+            modifier = Modifier.size(140.dp),
+        )
     }
 }
 
